@@ -6,13 +6,44 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		4F989CFE2DC84AC900FC5A04 /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 4F989CFD2DC84AC900FC5A04 /* DesignSystem */; };
+		4F989D062DC84B0600FC5A04 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4F989D052DC84B0600FC5A04 /* IQKeyboardManagerSwift */; };
+		4F989D092DC84B4100FC5A04 /* Linkly in Frameworks */ = {isa = PBXBuildFile; productRef = 4F989D082DC84B4100FC5A04 /* Linkly */; };
+		4F989D0C2DC84B5200FC5A04 /* Logger in Frameworks */ = {isa = PBXBuildFile; productRef = 4F989D0B2DC84B5200FC5A04 /* Logger */; };
+		4F989D0F2DC84B8500FC5A04 /* Network in Frameworks */ = {isa = PBXBuildFile; productRef = 4F989D0E2DC84B8500FC5A04 /* Network */; };
+		4F989D122DC84B9600FC5A04 /* NVActivityIndicatorView in Frameworks */ = {isa = PBXBuildFile; productRef = 4F989D112DC84B9600FC5A04 /* NVActivityIndicatorView */; };
+		4F989D142DC84B9600FC5A04 /* NVActivityIndicatorViewExtended in Frameworks */ = {isa = PBXBuildFile; productRef = 4F989D132DC84B9600FC5A04 /* NVActivityIndicatorViewExtended */; };
+		4F989D172DC84BB000FC5A04 /* QAlert in Frameworks */ = {isa = PBXBuildFile; productRef = 4F989D162DC84BB000FC5A04 /* QAlert */; };
+		4F989D1A2DC84BCC00FC5A04 /* Router in Frameworks */ = {isa = PBXBuildFile; productRef = 4F989D192DC84BCC00FC5A04 /* Router */; };
+		4F989D1D2DC84BE700FC5A04 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 4F989D1C2DC84BE700FC5A04 /* SDWebImage */; };
+		4F989D1F2DC84BE700FC5A04 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4F989D1E2DC84BE700FC5A04 /* SDWebImageMapKit */; };
+		4F989D222DC84BFD00FC5A04 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 4F989D212DC84BFD00FC5A04 /* SDWebImageSwiftUI */; };
+		4F989D252DC84C0800FC5A04 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = 4F989D242DC84C0800FC5A04 /* Logging */; };
+		4F989D282DC84E2300FC5A04 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 4F989D272DC84E2300FC5A04 /* Alamofire */; };
+		4FE8CB3E2DC8776C001683E9 /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = 4FE8CB3D2DC8776C001683E9 /* GRDB */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
-		4F989CE52DC8462B00FC5A04 /* QIKIExhibition.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QIKIExhibition.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4F989CE52DC8462B00FC5A04 /* QIKI Exhibition.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "QIKI Exhibition.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		4FE8CB252DC875C2001683E9 /* Exceptions for "QIKIExhibition" folder in "QIKIExhibition" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 4F989CE42DC8462B00FC5A04 /* QIKIExhibition */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		4F989CE72DC8462B00FC5A04 /* QIKIExhibition */ = {
+		4FE8CB1F2DC875C2001683E9 /* QIKIExhibition */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				4FE8CB252DC875C2001683E9 /* Exceptions for "QIKIExhibition" folder in "QIKIExhibition" target */,
+			);
 			path = QIKIExhibition;
 			sourceTree = "<group>";
 		};
@@ -23,6 +54,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F989D1A2DC84BCC00FC5A04 /* Router in Frameworks */,
+				4F989D282DC84E2300FC5A04 /* Alamofire in Frameworks */,
+				4F989D1F2DC84BE700FC5A04 /* SDWebImageMapKit in Frameworks */,
+				4F989D142DC84B9600FC5A04 /* NVActivityIndicatorViewExtended in Frameworks */,
+				4F989D0F2DC84B8500FC5A04 /* Network in Frameworks */,
+				4F989D222DC84BFD00FC5A04 /* SDWebImageSwiftUI in Frameworks */,
+				4FE8CB3E2DC8776C001683E9 /* GRDB in Frameworks */,
+				4F989D172DC84BB000FC5A04 /* QAlert in Frameworks */,
+				4F989D092DC84B4100FC5A04 /* Linkly in Frameworks */,
+				4F989CFE2DC84AC900FC5A04 /* DesignSystem in Frameworks */,
+				4F989D122DC84B9600FC5A04 /* NVActivityIndicatorView in Frameworks */,
+				4F989D1D2DC84BE700FC5A04 /* SDWebImage in Frameworks */,
+				4F989D0C2DC84B5200FC5A04 /* Logger in Frameworks */,
+				4F989D252DC84C0800FC5A04 /* Logging in Frameworks */,
+				4F989D062DC84B0600FC5A04 /* IQKeyboardManagerSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -32,7 +78,7 @@
 		4F989CDC2DC8462B00FC5A04 = {
 			isa = PBXGroup;
 			children = (
-				4F989CE72DC8462B00FC5A04 /* QIKIExhibition */,
+				4FE8CB1F2DC875C2001683E9 /* QIKIExhibition */,
 				4F989CE62DC8462B00FC5A04 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -40,7 +86,7 @@
 		4F989CE62DC8462B00FC5A04 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4F989CE52DC8462B00FC5A04 /* QIKIExhibition.app */,
+				4F989CE52DC8462B00FC5A04 /* QIKI Exhibition.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -61,13 +107,28 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				4F989CE72DC8462B00FC5A04 /* QIKIExhibition */,
+				4FE8CB1F2DC875C2001683E9 /* QIKIExhibition */,
 			);
 			name = QIKIExhibition;
 			packageProductDependencies = (
+				4F989CFD2DC84AC900FC5A04 /* DesignSystem */,
+				4F989D052DC84B0600FC5A04 /* IQKeyboardManagerSwift */,
+				4F989D082DC84B4100FC5A04 /* Linkly */,
+				4F989D0B2DC84B5200FC5A04 /* Logger */,
+				4F989D0E2DC84B8500FC5A04 /* Network */,
+				4F989D112DC84B9600FC5A04 /* NVActivityIndicatorView */,
+				4F989D132DC84B9600FC5A04 /* NVActivityIndicatorViewExtended */,
+				4F989D162DC84BB000FC5A04 /* QAlert */,
+				4F989D192DC84BCC00FC5A04 /* Router */,
+				4F989D1C2DC84BE700FC5A04 /* SDWebImage */,
+				4F989D1E2DC84BE700FC5A04 /* SDWebImageMapKit */,
+				4F989D212DC84BFD00FC5A04 /* SDWebImageSwiftUI */,
+				4F989D242DC84C0800FC5A04 /* Logging */,
+				4F989D272DC84E2300FC5A04 /* Alamofire */,
+				4FE8CB3D2DC8776C001683E9 /* GRDB */,
 			);
 			productName = QIKIExhibition;
-			productReference = 4F989CE52DC8462B00FC5A04 /* QIKIExhibition.app */;
+			productReference = 4F989CE52DC8462B00FC5A04 /* QIKI Exhibition.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -82,6 +143,7 @@
 				TargetAttributes = {
 					4F989CE42DC8462B00FC5A04 = {
 						CreatedOnToolsVersion = 16.3;
+						LastSwiftMigration = 1630;
 					};
 				};
 			};
@@ -94,6 +156,21 @@
 			);
 			mainGroup = 4F989CDC2DC8462B00FC5A04;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				4F989CFC2DC84AC900FC5A04 /* XCRemoteSwiftPackageReference "DesignSystem" */,
+				4F989D042DC84B0600FC5A04 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
+				4F989D072DC84B4100FC5A04 /* XCRemoteSwiftPackageReference "Linkly" */,
+				4F989D0A2DC84B5200FC5A04 /* XCRemoteSwiftPackageReference "Logger" */,
+				4F989D0D2DC84B8500FC5A04 /* XCRemoteSwiftPackageReference "Network" */,
+				4F989D102DC84B9600FC5A04 /* XCRemoteSwiftPackageReference "NVActivityIndicatorView" */,
+				4F989D152DC84BB000FC5A04 /* XCRemoteSwiftPackageReference "QAlert" */,
+				4F989D182DC84BCC00FC5A04 /* XCRemoteSwiftPackageReference "Router" */,
+				4F989D1B2DC84BE700FC5A04 /* XCRemoteSwiftPackageReference "SDWebImage" */,
+				4F989D202DC84BFD00FC5A04 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+				4F989D232DC84C0800FC5A04 /* XCRemoteSwiftPackageReference "swift-log" */,
+				4F989D262DC84E2300FC5A04 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				4FE8CB3C2DC8776C001683E9 /* XCRemoteSwiftPackageReference "GRDB.swift" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 4F989CE62DC8462B00FC5A04 /* Products */;
 			projectDirPath = "";
@@ -181,7 +258,8 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
+				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -237,6 +315,7 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 			};
 			name = Release;
@@ -245,37 +324,66 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_ASSET_SYMBOLS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = NO;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = QIKIExhibition/QIKIExhibition.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 4XF5KZD4AY;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)/**";
 				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = "$(inherited)/**";
+				INFOPLIST_FILE = QIKIExhibition/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
+				INFOPLIST_KEY_NSDocumentsFolderUsageDescription = "App would like to use app document folder to access the logs.";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "App would like to use local network to discover printers to the local network.";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UIStatusBarHidden = NO;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
-				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
-				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"@executable_path/Frameworks",
+					"$(inherited)",
+				);
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(PROJECT_DIR)",
+					"$(inherited)",
+				);
+				LINKER_DISPLAYS_MANGLED_NAMES = NO;
 				MACOSX_DEPLOYMENT_TARGET = 15.3;
 				MARKETING_VERSION = 1.0;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.miamedia.QIKIExhibition;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				REGISTER_APP_GROUPS = YES;
+				PRODUCT_NAME = "QIKI Exhibition";
+				REGISTER_APP_GROUPS = NO;
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "QIKIExhibition/Header Files/QIKIExhibition-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				XROS_DEPLOYMENT_TARGET = 2.4;
 			};
 			name = Debug;
@@ -284,37 +392,65 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_ASSET_SYMBOLS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = NO;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = QIKIExhibition/QIKIExhibition.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 4XF5KZD4AY;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)/**";
 				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = "$(inherited)/**";
+				INFOPLIST_FILE = QIKIExhibition/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
+				INFOPLIST_KEY_NSDocumentsFolderUsageDescription = "App would like to use app document folder to access the logs.";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "App would like to use local network to discover printers to the local network.";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UIStatusBarHidden = NO;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
-				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
-				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"@executable_path/Frameworks",
+					"$(inherited)",
+				);
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(PROJECT_DIR)",
+					"$(inherited)",
+				);
+				LINKER_DISPLAYS_MANGLED_NAMES = NO;
 				MACOSX_DEPLOYMENT_TARGET = 15.3;
 				MARKETING_VERSION = 1.0;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.miamedia.QIKIExhibition;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				REGISTER_APP_GROUPS = YES;
+				PRODUCT_NAME = "QIKI Exhibition";
+				REGISTER_APP_GROUPS = NO;
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "QIKIExhibition/Header Files/QIKIExhibition-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				XROS_DEPLOYMENT_TARGET = 2.4;
 			};
 			name = Release;
@@ -341,6 +477,191 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4F989CFC2DC84AC900FC5A04 /* XCRemoteSwiftPackageReference "DesignSystem" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/NirmitDagly/DesignSystem";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.9;
+			};
+		};
+		4F989D042DC84B0600FC5A04 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.0.1;
+			};
+		};
+		4F989D072DC84B4100FC5A04 /* XCRemoteSwiftPackageReference "Linkly" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/NirmitDagly/Linkly";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		4F989D0A2DC84B5200FC5A04 /* XCRemoteSwiftPackageReference "Logger" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/NirmitDagly/Logger.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.3;
+			};
+		};
+		4F989D0D2DC84B8500FC5A04 /* XCRemoteSwiftPackageReference "Network" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/NirmitDagly/Network.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		4F989D102DC84B9600FC5A04 /* XCRemoteSwiftPackageReference "NVActivityIndicatorView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ninjaprox/NVActivityIndicatorView.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.2.0;
+			};
+		};
+		4F989D152DC84BB000FC5A04 /* XCRemoteSwiftPackageReference "QAlert" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/NirmitDagly/QAlert";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		4F989D182DC84BCC00FC5A04 /* XCRemoteSwiftPackageReference "Router" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/NirmitDagly/Router";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		4F989D1B2DC84BE700FC5A04 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImage.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.21.0;
+			};
+		};
+		4F989D202DC84BFD00FC5A04 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.1.3;
+			};
+		};
+		4F989D232DC84C0800FC5A04 /* XCRemoteSwiftPackageReference "swift-log" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-log.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.6.3;
+			};
+		};
+		4F989D262DC84E2300FC5A04 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.10.2;
+			};
+		};
+		4FE8CB3C2DC8776C001683E9 /* XCRemoteSwiftPackageReference "GRDB.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/groue/GRDB.swift.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4F989CFD2DC84AC900FC5A04 /* DesignSystem */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4F989CFC2DC84AC900FC5A04 /* XCRemoteSwiftPackageReference "DesignSystem" */;
+			productName = DesignSystem;
+		};
+		4F989D052DC84B0600FC5A04 /* IQKeyboardManagerSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4F989D042DC84B0600FC5A04 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
+			productName = IQKeyboardManagerSwift;
+		};
+		4F989D082DC84B4100FC5A04 /* Linkly */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4F989D072DC84B4100FC5A04 /* XCRemoteSwiftPackageReference "Linkly" */;
+			productName = Linkly;
+		};
+		4F989D0B2DC84B5200FC5A04 /* Logger */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4F989D0A2DC84B5200FC5A04 /* XCRemoteSwiftPackageReference "Logger" */;
+			productName = Logger;
+		};
+		4F989D0E2DC84B8500FC5A04 /* Network */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4F989D0D2DC84B8500FC5A04 /* XCRemoteSwiftPackageReference "Network" */;
+			productName = Network;
+		};
+		4F989D112DC84B9600FC5A04 /* NVActivityIndicatorView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4F989D102DC84B9600FC5A04 /* XCRemoteSwiftPackageReference "NVActivityIndicatorView" */;
+			productName = NVActivityIndicatorView;
+		};
+		4F989D132DC84B9600FC5A04 /* NVActivityIndicatorViewExtended */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4F989D102DC84B9600FC5A04 /* XCRemoteSwiftPackageReference "NVActivityIndicatorView" */;
+			productName = NVActivityIndicatorViewExtended;
+		};
+		4F989D162DC84BB000FC5A04 /* QAlert */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4F989D152DC84BB000FC5A04 /* XCRemoteSwiftPackageReference "QAlert" */;
+			productName = QAlert;
+		};
+		4F989D192DC84BCC00FC5A04 /* Router */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4F989D182DC84BCC00FC5A04 /* XCRemoteSwiftPackageReference "Router" */;
+			productName = Router;
+		};
+		4F989D1C2DC84BE700FC5A04 /* SDWebImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4F989D1B2DC84BE700FC5A04 /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImage;
+		};
+		4F989D1E2DC84BE700FC5A04 /* SDWebImageMapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4F989D1B2DC84BE700FC5A04 /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImageMapKit;
+		};
+		4F989D212DC84BFD00FC5A04 /* SDWebImageSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4F989D202DC84BFD00FC5A04 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
+			productName = SDWebImageSwiftUI;
+		};
+		4F989D242DC84C0800FC5A04 /* Logging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4F989D232DC84C0800FC5A04 /* XCRemoteSwiftPackageReference "swift-log" */;
+			productName = Logging;
+		};
+		4F989D272DC84E2300FC5A04 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4F989D262DC84E2300FC5A04 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		4FE8CB3D2DC8776C001683E9 /* GRDB */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4FE8CB3C2DC8776C001683E9 /* XCRemoteSwiftPackageReference "GRDB.swift" */;
+			productName = GRDB;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4F989CDD2DC8462B00FC5A04 /* Project object */;
 }
