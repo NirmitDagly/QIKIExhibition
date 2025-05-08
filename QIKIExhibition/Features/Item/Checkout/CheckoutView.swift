@@ -16,15 +16,15 @@ struct CheckoutView: View {
     
     @State var titleText = "Checkout"
     
-    @State var name = "Mr. Nirmit  Atulkumar   Dagly"
+    @State var name = ""
     
-    @State var businessName = "Miamedia Pty. Ltd., Collingwood"
+    @State var businessName = ""
     
-    @State var email = "nirmit.a.dagly@miamedia.com.au"
+    @State var email = ""
     
-    @State var phone = "0414190553"
+    @State var phone = ""
     
-    @State var position = "Senior iOS Developer"
+    @State var position = ""
     
     @StateObject var checkoutViewModel: CheckoutViewModel
     
@@ -756,6 +756,10 @@ fileprivate struct PayNowView: View {
             checkoutViewModel.businessEmail = email
             checkoutViewModel.businessPhone = phone
             checkoutViewModel.position = position
+            
+            Log.shared.writeToLogFile(atLevel: .info,
+                                      withMessage: "User is entering the following lead details: \nName: \(name), \nBusiness Name: \(businessName), \nBusiness Email: \(email), \nBusiness Phone: \(phone), \nPosition: \(position)."
+            )
             
             if checkoutViewModel.selectedPaymentMethod == .card {
                 if UserDefaults.linklyToken == "" {

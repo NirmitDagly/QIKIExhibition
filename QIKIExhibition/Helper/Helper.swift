@@ -198,7 +198,7 @@ public class Helper {
     
     func initiateLinklyAccessTokenExpiryCheck() {
         if refreshLinklyAccessTokenTimer == nil {
-            refreshLinklyAccessTokenTimer = Timer.scheduledTimer(withTimeInterval: 60,
+            refreshLinklyAccessTokenTimer = Timer.scheduledTimer(withTimeInterval: 600,
                                                                  repeats: true
             ) { _ in
                 Task { [weak self] in

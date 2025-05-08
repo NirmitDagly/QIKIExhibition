@@ -43,13 +43,16 @@ final class CheckoutViewModel: ObservableObject {
     
     @Published public var businessEmail = ""
     
-    @Published public var positionList = ["CEO",
+    @Published public var positionList = ["Owner",
+                                          "Co-owner",
+                                          "CEO",
                                           "COO",
                                           "CFO",
                                           "CTO",
-                                          "Owner",
-                                          "Co-Owner",
-                                          "Executive",
+                                          "Director",
+                                          "Executive Director",
+                                          "CA",
+                                          "Accountant",
                                           "Staff"
     ]
     

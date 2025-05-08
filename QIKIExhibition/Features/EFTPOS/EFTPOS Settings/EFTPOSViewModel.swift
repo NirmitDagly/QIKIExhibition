@@ -116,29 +116,32 @@ final class EFTPOSViewModel: ObservableObject {
     }
 }
 
+/*
+ LinklyCredentials.init(terminalId: "18390394",
+                                             serialNumber: "1850479335",
+                                             userName: "43800676002",
+                                             password: "8RSTCVH4F3X330MS"
+                                            ),
+                      LinklyCredentials.init(terminalId: "18390395",
+                                             serialNumber: "18504893001",
+                                             userName: "43800676002",
+                                             password: "8RSTCVH4F3X330MS"
+                                            ),
+                      LinklyCredentials.init(terminalId: "18390396",
+                                             serialNumber: "18504893002",
+                                             userName: "43800676002",
+                                             password: "8RSTCVH4F3X330MS"
+                                            ),
+                      LinklyCredentials.init(terminalId: "18390397",
+                                             serialNumber: "18504893003",
+                                             userName: "43800676002",
+                                             password: "8RSTCVH4F3X330MS"
+                                            ),
+ */
+
 extension EFTPOSViewModel {
     public func saveDemoDataIntoDatabase() {
-        let linklyDetails = [LinklyCredentials.init(terminalId: "18390394",
-                                                    serialNumber: "1850479335",
-                                                    userName: "43800676002",
-                                                    password: "8RSTCVH4F3X330MS"
-                                                   ),
-                             LinklyCredentials.init(terminalId: "18390395",
-                                                    serialNumber: "18504893001",
-                                                    userName: "43800676002",
-                                                    password: "8RSTCVH4F3X330MS"
-                                                   ),
-                             LinklyCredentials.init(terminalId: "18390396",
-                                                    serialNumber: "18504893002",
-                                                    userName: "43800676002",
-                                                    password: "8RSTCVH4F3X330MS"
-                                                   ),
-                             LinklyCredentials.init(terminalId: "18390397",
-                                                    serialNumber: "18504893003",
-                                                    userName: "43800676002",
-                                                    password: "8RSTCVH4F3X330MS"
-                                                   ),
-                             LinklyCredentials.init(terminalId: "18390398",
+        let linklyDetails = [LinklyCredentials.init(terminalId: "18390398",
                                                     serialNumber: "18504893004",
                                                     userName: "43800676002",
                                                     password: "8RSTCVH4F3X330MS"
@@ -256,7 +259,7 @@ extension EFTPOSViewModel {
         )
         
         do {
-            async let getLinklyToken = Pairing(isProductionMode: false).initiatePairing(withTerminalNumber: selectedSerialNumber,
+            async let getLinklyToken = Pairing(isProductionMode: true).initiatePairing(withTerminalNumber: selectedSerialNumber,
                                                                                        andUsername: linklyUserName,
                                                                                        andPassword: linklyPassword,
                                                                                        andPairingCode: pinPadPairingCode,
