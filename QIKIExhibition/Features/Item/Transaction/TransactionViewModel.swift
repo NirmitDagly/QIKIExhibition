@@ -83,7 +83,7 @@ extension TransactionViewModel {
                 )
                 
                 if transactionResponseDetails.linklyTransaction.responseText.localizedCaseInsensitiveContains("APPROVED") {
-                    checkoutViewModel.saveLeadDetailsToDatabase()
+                    await checkoutViewModel.saveLeadDetailsToDatabase()
                     state = .transactionCompleted
                     
                     if checkoutViewModel.isPaymentPending == false  {

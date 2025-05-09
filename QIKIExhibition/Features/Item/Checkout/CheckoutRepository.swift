@@ -17,6 +17,13 @@ public protocol QCheckoutRepository {
                             andBusinessEmail email: String,
                             andPosition position: String
     ) throws
+    
+    func saveInquiryDetailsOnServer(withName name: String,
+                                    andBusinessName businessName: String,
+                                    andBusinessPhone businessPhone: String,
+                                    andBusinessEmail email: String,
+                                    andPosition position: String
+    ) async throws -> InquiryDetails
 }
 
 public final class CheckoutRepository: QCheckoutRepository {
@@ -52,5 +59,25 @@ extension CheckoutRepository {
                 try leadDetails.insert(db)
             }
         }
+    }
+}
+
+extension CheckoutRepository {
+    
+    public func saveInquiryDetailsOnServer(withName name: String,
+                                           andBusinessName businessName: String,
+                                           andBusinessPhone businessPhone: String,
+                                           andBusinessEmail email: String,
+                                           andPosition position: String
+    ) async throws -> InquiryDetails {
+        try await apiClientService.request(
+            APIEndpoints.saveCompetitionEntry(withName: name,
+                                              andBusinessName: businessName,
+                                              andBusinessEmail: email,
+                                              andPhoneNumber: businessPhone,
+                                              andPosition: position
+                                            ),
+            mapper: InquiryDetailsResponseMapper()
+        )
     }
 }

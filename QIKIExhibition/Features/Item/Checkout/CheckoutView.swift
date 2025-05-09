@@ -16,15 +16,17 @@ struct CheckoutView: View {
     
     @State var titleText = "Checkout"
     
-    @State var name = ""
+    @State var name = "Nirmit"
     
-    @State var businessName = ""
+    @State var businessName = "QIKI"
     
-    @State var email = ""
+    @State var email = "nirmit@qiki.com.au"
     
-    @State var phone = ""
+    @State var phone = "0414190553"
     
     @State var position = ""
+    
+    @State var shouldShowConfirmation = false
     
     @StateObject var checkoutViewModel: CheckoutViewModel
     
@@ -123,6 +125,7 @@ struct CheckoutView: View {
                                            email: $email,
                                            phone: $phone,
                                            position: $position,
+                                           shouldShowConfirmation: $shouldShowConfirmation,
                                            checkoutViewModel: checkoutViewModel,
                                            router: router
                                 )
@@ -146,6 +149,21 @@ struct CheckoutView: View {
                     BackgroundView()
                
                     TransactionView(checkoutViewModel: checkoutViewModel)
+                }
+                
+                if shouldShowConfirmation == true {
+                    BackgroundView()
+                    
+                    EntryConfirmationView()
+                }
+            }
+            .onChange(of: shouldShowConfirmation) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                    Task {
+                        //Display an alert to mark off payment.
+                        await checkoutViewModel.saveLeadDetailsToDatabase()
+                    }
+                    router.navigateBack()
                 }
             }
             .customAlert("ALERT",
@@ -250,7 +268,9 @@ fileprivate struct CheckoutTitleView: View {
             ) {
                 Button {
                     //Mark item as override as paid
-                    checkoutViewModel.markOrderAsPaid()
+                    Task {
+                        await checkoutViewModel.markOrderAsPaid()
+                    }
                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "ResetView"),
@@ -731,6 +751,8 @@ fileprivate struct PayNowView: View {
     
     @Binding var position: String
     
+    @Binding var shouldShowConfirmation: Bool
+    
     @ObservedObject var checkoutViewModel: CheckoutViewModel
     
     @ObservedObject var router: Router
@@ -774,9 +796,7 @@ fileprivate struct PayNowView: View {
                     checkoutViewModel.shouldShowTransactionView = true
                 }
             } else {
-                //Display an alert to mark off payment.
-                checkoutViewModel.saveLeadDetailsToDatabase()
-                router.navigateBack()
+                shouldShowConfirmation = true
             }
         } label: {
             Text("\(checkoutViewModel.payButtonTitle)")
@@ -799,6 +819,70 @@ fileprivate struct PayNowView: View {
                         lineWidth: 2
                        )
         )
+    }
+}
+
+fileprivate struct EntryConfirmationView: View {
+    
+    var body: some View {
+        GeometryReader { geometryReader in
+            VStack {
+                Image(systemName: "checkmark.circle.fill")
+                    .resizable()
+                    .frame(width: 60,
+                           height: 60,
+                           alignment: .center
+                    )
+                    .foregroundStyle(Color.qikiGreen)
+                    .padding(.bottom,
+                             10
+                    )
+                
+                Text("Qiki Competition Entry Confirmed!")
+                    .frame(alignment: .center)
+                    .font(.demiBoldFontWithSize(withSize: 22))
+                    .padding(.bottom,
+                             20
+                    )
+                    .padding([.leading, .trailing],
+                             20
+                    )
+                
+                Text("You will receive an email confirming your entry shortly.")
+                    .frame(alignment: .center)
+                    .font(.demiBoldFontWithSize(withSize: 18))
+                    .padding(.bottom,
+                             10
+                    )
+                    .padding([.leading, .trailing],
+                             20
+                    )
+                
+                Text("Good luck!")
+                    .frame(alignment: .center)
+                    .font(.demiBoldFontWithSize(withSize: 18))
+            }
+            .frame(height: 350)
+            .background(Color.white)
+            .cornerRadius(7,
+                          corners: .allCorners
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 7)
+                    .stroke(Color.clear,
+                            lineWidth: 2
+                           )
+            )
+            .padding([.leading, .trailing],
+                     geometryReader.size.width / 4
+            )
+            .padding([.top, .bottom],
+                     geometryReader.size.height / 4
+            )
+            .ignoresSafeArea(.keyboard,
+                             edges: .bottom
+            )
+        }
     }
 }
 

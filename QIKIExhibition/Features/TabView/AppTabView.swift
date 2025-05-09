@@ -34,7 +34,7 @@ struct AppTabView: View {
                 
                 EnquiriesCoordinator()
                     .tabItem {
-                        Label("Leads",
+                        Label("Entries",
                               systemImage: "list.clipboard"
                         )
                     }

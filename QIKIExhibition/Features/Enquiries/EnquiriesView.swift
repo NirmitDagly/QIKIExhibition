@@ -15,7 +15,11 @@ import QAlert
 
 struct EnquiriesView: View {
     
-    @State var titleText = "Leads"
+    @State var titleText = "Competition Entries"
+    
+    @State var shouldShowPasswordAlert = true
+    
+    @State var shouldDisplayLeads = false
 
     @StateObject var enquiriesViewModel: EnquiriesViewModel
     
@@ -26,22 +30,52 @@ struct EnquiriesView: View {
     }
     
     var body: some View {
-        VStack(spacing: 0) {
-            EnquiriesTitleView(title: titleText)
-            
-            List {
-                Section {
-                    EnquiriesHeaderView(enquiriesViewModel: enquiriesViewModel)
+        ZStack {
+            VStack(spacing: 0) {
+                EnquiriesTitleView(title: titleText)
+                
+                if shouldShowPasswordAlert {
+                    Spacer()
+                    
+                    PasswordView(shouldShowPasswordAlert: $shouldShowPasswordAlert,
+                                 shouldDisplayLeads: $shouldDisplayLeads,
+                                 enquiriesViewModel: enquiriesViewModel
+                    )
+                    .cornerRadius(7,
+                                  corners: .allCorners
+                    )
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 7)
+                            .stroke(Color.clear,
+                                    lineWidth: 2
+                                   )
+                    )
+                    
+                    Spacer()
                 }
                 
-                Section {
-                    EnquiriesListView(enquiriesViewModel: enquiriesViewModel)
+                if shouldDisplayLeads == true {
+                    List {
+                        Section {
+                            EnquiriesHeaderView(enquiriesViewModel: enquiriesViewModel)
+                        }
+                        
+                        Section {
+                            EnquiriesListView(enquiriesViewModel: enquiriesViewModel)
+                        }
+                    }
+                    .scrollIndicators(.hidden)
+                } else {
+                    Spacer()
                 }
             }
-            .scrollIndicators(.hidden)
         }
         .onAppear() {
-            enquiriesViewModel.getAllEnquiries()
+            shouldShowPasswordAlert = true
+        }
+        .onDisappear {
+            shouldShowPasswordAlert = true
+            shouldDisplayLeads = false
         }
     }
 }
@@ -209,6 +243,101 @@ struct EnquiriesListView: View {
                     .truncationMode(.tail)
                     .lineLimit(nil)
             }
+        }
+    }
+}
+
+struct PasswordView: View {
+    
+    @State var password = ""
+    
+    @State var shouldDisplayErrorMessage = false
+    
+    @Binding var shouldShowPasswordAlert: Bool
+    
+    @Binding var shouldDisplayLeads: Bool
+    
+    @ObservedObject var enquiriesViewModel: EnquiriesViewModel
+    
+    var body: some View {
+        VStack {
+            Text("Please enter your password to view competition entries.")
+                .frame(height: 50)
+                .font(.mediumFontWithSize(withSize: 18))
+            
+            if shouldDisplayErrorMessage {
+                Text("(Please enter correct password.)")
+                    .frame(height: 30)
+                    .font(.demiBoldFontWithSize(withSize: 16))
+                    .foregroundStyle(.red)
+            }
+            
+            SecureField("Enter Password",
+                        text: $password
+            )
+            .frame(width: 200,
+                   height: 50,
+                   alignment: .center
+            )
+            .font(.mediumFontWithSize(withSize: 16))
+            .foregroundColor(.black)
+            .padding(.horizontal,
+                     20
+            )
+            .keyboardType(.numberPad)
+            .submitLabel(.done)
+            .onSubmit {
+                if password == "4242" {
+                    shouldShowPasswordAlert = false
+                    shouldDisplayErrorMessage = false
+                    enquiriesViewModel.getAllEnquiries()
+                    shouldDisplayLeads = true
+                } else {
+                    shouldDisplayErrorMessage = true
+                }
+            }
+            .cornerRadius(7,
+                          corners: .allCorners
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 7)
+                    .stroke(Color.gray,
+                            lineWidth: 2
+                           )
+            )
+            .padding()
+            
+            Button {
+                if password == "4242" {
+                    shouldShowPasswordAlert = false
+                    shouldDisplayErrorMessage = false
+                    enquiriesViewModel.getAllEnquiries()
+                    shouldDisplayLeads = true
+                } else {
+                    shouldDisplayErrorMessage = true
+                }
+            } label: {
+                Text("Ok")
+                    .font(.headline).bold()
+                    .frame(width: 250,
+                           height: 50
+                    )
+                    .foregroundStyle(Color.white)
+                    .multilineTextAlignment(.center)
+                    .background(Color.qikiColor)
+            }
+            .frame(width: 250,
+                   height: 50
+            )
+            .cornerRadius(7,
+                          corners: .allCorners
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 7)
+                    .stroke(Color.clear,
+                            lineWidth: 2
+                           )
+            )
         }
     }
 }

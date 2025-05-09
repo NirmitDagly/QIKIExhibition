@@ -113,7 +113,7 @@ extension CheckoutViewModel {
 
 extension CheckoutViewModel {
     
-    public func saveLeadDetailsToDatabase() {
+    public func saveLeadDetailsToDatabase() async {
         do {
             try repository.saveInquiryDetails(withName: name,
                                               andBusinessName: businessName,
@@ -121,6 +121,8 @@ extension CheckoutViewModel {
                                               andBusinessEmail: businessEmail,
                                               andPosition: position
             )
+            
+            await saveEnquiryDetailsOnServer()
         } catch {
             //Error logged at repository level...
         }
@@ -131,7 +133,7 @@ extension CheckoutViewModel {
 extension CheckoutViewModel {
     
     //MARK: Mark order override as paid
-    public func markOrderAsPaid() {
+    public func markOrderAsPaid() async {
         do {
             try repository.saveInquiryDetails(withName: name,
                                               andBusinessName: businessName,
@@ -139,9 +141,61 @@ extension CheckoutViewModel {
                                               andBusinessEmail: businessEmail,
                                               andPosition: position
             )
+            
+            await saveEnquiryDetailsOnServer()
         } catch {
             //Error logged at repository level.
         }
     }
 }
 
+extension CheckoutViewModel {
+    
+    public func saveEnquiryDetailsOnServer() async {
+        do {
+            async let serverResponse = repository.saveInquiryDetailsOnServer(withName: name,
+                                                                             andBusinessName: businessName,
+                                                                             andBusinessPhone: businessPhone,
+                                                                             andBusinessEmail: businessEmail,
+                                                                             andPosition: position
+            )
+            
+            guard let serverResponseDetails = try? await serverResponse else {
+                Log.shared.writeToLogFile(atLevel: .error,
+                                          withMessage: "Last inquiry detail could not be saved on the server..."
+                )
+                
+                return
+            }
+            
+            Log.shared.writeToLogFile(atLevel: .info,
+                                      withMessage: "Last inquiry record has been stored on the server with \(serverResponseDetails)."
+            )
+        } catch APIError.invalidEndpoint {
+            print("Invalid end point...")
+            Log.shared.writeToLogFile(atLevel: .info,
+                                      withMessage: "Last inquiry record has been stored on the server because of invalid end point."
+            )
+        } catch APIError.badServerResponse {
+            print("Bad server response...")
+            Log.shared.writeToLogFile(atLevel: .info,
+                                      withMessage: "Last inquiry record has been stored on the server because of bad server response."
+            )
+        } catch APIError.networkError {
+            print("Network error...")
+            Log.shared.writeToLogFile(atLevel: .info,
+                                      withMessage: "Last inquiry record has been stored on the server because of network error."
+            )
+        } catch APIError.parsing {
+            print("Parsing error...")
+            Log.shared.writeToLogFile(atLevel: .info,
+                                      withMessage: "Last inquiry record has been stored on the server because of parsing error."
+            )
+        } catch {
+            print("Unkonwn error occurred...")
+            Log.shared.writeToLogFile(atLevel: .info,
+                                      withMessage: "Last inquiry record has been stored on the server because of unknonwn error."
+            )
+        }
+    }
+}

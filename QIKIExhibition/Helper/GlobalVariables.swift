@@ -51,7 +51,7 @@ var dbPool: DatabasePool? = nil
 var refreshAccessTokenTimer: Timer?
 
 //Shared Transaction
-var sharedTransaction = TransactionInteraction(isProductionMode: true,
+var sharedTransaction = TransactionInteraction(isProductionMode: false,
                                                andAuthToken: UserDefaults.linklyToken!
 )
 

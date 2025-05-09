@@ -87,7 +87,7 @@ struct TransactionView: View {
             }
         }
         .onChange(of: transactionViewModel.shouldNavigateBack) {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                 checkoutViewModel.shouldShowTransactionView = false
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "ResetView"),
                                                 object: nil
@@ -97,7 +97,7 @@ struct TransactionView: View {
         }
         .onChange(of: transactionViewModel.state) {
             if transactionViewModel.state == .transactionCancelled || transactionViewModel.state == .error {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                     checkoutViewModel.shouldShowTransactionView = false
                 }
             }
@@ -150,6 +150,7 @@ fileprivate struct TransactionTitleView: View {
 }
 
 fileprivate struct TransactionProgressView: View {
+    
     @ObservedObject var checkoutViewModel: CheckoutViewModel
 
     @ObservedObject var transactionViewModel: TransactionViewModel
@@ -170,11 +171,23 @@ fileprivate struct TransactionProgressView: View {
                              10
                     )
                 
-                Text("Transaction Successful")
-                    .frame(height: 50,
-                           alignment: .center
-                    )
+                Text("Qiki Competition Entry Confirmed!")
+                    .frame(alignment: .center)
                     .font(.demiBoldFontWithSize(withSize: 22))
+                    .padding(.bottom,
+                             20
+                    )
+                
+                Text("You will receive an email confirming your entry shortly.")
+                    .frame(alignment: .center)
+                    .font(.demiBoldFontWithSize(withSize: 18))
+                    .padding(.bottom,
+                             10
+                    )
+                
+                Text("Good luck!")
+                    .frame(alignment: .center)
+                    .font(.demiBoldFontWithSize(withSize: 18))
             }
         } else if transactionViewModel.state == .transactionCancelled {
             VStack {
@@ -208,7 +221,7 @@ fileprivate struct TransactionProgressView: View {
                              10
                     )
                 
-                Text("Transaction Failed. Try Again!")
+                Text("There is some error occurred. Please try again!")
                     .frame(height: 50,
                            alignment: .center
                     )

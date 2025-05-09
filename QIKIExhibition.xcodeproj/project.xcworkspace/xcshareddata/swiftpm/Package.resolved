@@ -1,5 +1,5 @@
 {
-  "originHash" : "5a34a833adf66572c90c4c04268e048136caa36a9af3f03e395ceb9c0929f8e4",
+  "originHash" : "7a743bb566da4bcf5ecad12951644a21a6d33c352a47e49c2a49838722ff98f2",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -141,8 +141,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/NirmitDagly/QAlert",
       "state" : {
-        "revision" : "0770703c2603050d0df75df07bdd8e271b15127f",
-        "version" : "1.0.19"
+        "revision" : "ae22c71ccb073dddeccd9d050627602dffc56b90",
+        "version" : "1.0.27"
       }
     },
     {

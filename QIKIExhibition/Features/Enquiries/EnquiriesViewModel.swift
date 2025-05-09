@@ -17,6 +17,21 @@ final class EnquiriesViewModel: ObservableObject {
     
     private let repository: EnquiriesRepository
     
+    //Alert
+    @Published public var displayPasswordAlert = false
+    
+    @Published public var displayErrorAlert = false
+    
+    @Published public var displaySuccessAlert = false
+    
+    @Published public var displayNetworkAlert = false
+    
+    @Published public var shouldShowCancelButton = false
+    
+    @Published public var alertMessage = ""
+    
+    @Published public var passwordAlertMessage = "Please enter your password to view enquiries."
+    
     init(repository: EnquiriesRepository) {
         self.repository = repository
     }
