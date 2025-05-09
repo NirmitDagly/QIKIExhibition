@@ -54,25 +54,6 @@ enum CheckoutDestination: Hashable {
     case checkoutView(itemsInDocket: [Product])
 }
 
-public enum OrderStatus: String, Codable {
-    case incoming = "Incoming"
-    case active = "Active"
-    case history = "History"
-}
-
-public enum PaymentType: String, Codable, Hashable {
-    case fullAmount = "Full Amount" //0
-    case byTender = "By Tender" //1
-    case evenSplit = "Even Split" //2
-    case productSplit = "Split By Products" //3
-}
-
-public enum ReceiptType: String, Codable, Hashable {
-    case none = "None" //0
-    case digital = "Digital" //1
-    case print = "Print" // 2
-}
-
 public enum PaymentMethod: String, Codable, Hashable {
     case card = "Card" //0
     case cash = "Cash" //1

@@ -8,17 +8,7 @@
 import Foundation
 
 extension Bool {
-    func isTodayWeeekend() -> Bool {
-        let date = Date()
-        let calendar = Calendar.current
-        
-        if calendar.isDateInWeekend(date) {
-            return true
-        } else {
-            return false
-        }
-    }
-    
+
     func toString() -> String {
         return self ? "true" : "false"
     }

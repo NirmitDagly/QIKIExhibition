@@ -21,13 +21,9 @@ let appBuildNumber = UIApplication.buildNumber
 
 let databaseVersion = "1.0"
 
-var imageDirectoryPath = ""
-
 let deviceUUID = UIDevice.current.identifierForVendor!.uuidString.lowercased() as String
 
 var deviceID = 0
-
-var posID = "Hospitality" //(UserDefaults.token?.userName ?? "Admin") + String(UserDefaults.deviceID)
 
 let deviceName = UIDevice.current.name
 
@@ -35,11 +31,7 @@ let deviceModel = UIDevice.current.model
 
 let deviceOSVersion = UIDevice.current.systemVersion
 
-var sessionActive = false
-
 var spinnerActive = false
-
-var storeImage = UIImage.init(systemName: "person.2")
 
 //User Defaults
 let userDefaults = UserDefaults.standard
