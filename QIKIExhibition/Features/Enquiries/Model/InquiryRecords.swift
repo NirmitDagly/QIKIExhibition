@@ -15,7 +15,7 @@ public struct InquiryRecordDetails: Codable {
     public var businessPhone: String
     public var businessEmail: String
     public var position: String
-    public var syncStatus: Int
+    public var syncStatus: Int?
     public var dateAdded: Date?
     public var dateUpdated: Date?
     

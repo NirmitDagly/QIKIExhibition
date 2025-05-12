@@ -9,11 +9,11 @@ import Foundation
 import Network
 
 extension APIEndpoints {
-    static func saveCompetitionEntry(for entryDetails: [InquiryRecordDetails]) -> APIEndpoint {
+    static func saveCompetitionEntry(for entryDetails: [[String: Any]]) -> APIEndpoint {
         return .init(
             path: "/saveCompetitionEntry",
             httpMethod: .post,
-            headers: ["apiKey": UserDefaults.accessToken],
+            //headers: ["apiKey": UserDefaults.accessToken],
             bodyParameter: .dictionary(["entryDetails": entryDetails],
                                        options: .prettyPrinted
                                       )

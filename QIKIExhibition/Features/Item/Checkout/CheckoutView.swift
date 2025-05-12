@@ -158,11 +158,16 @@ struct CheckoutView: View {
                 }
             }
             .onChange(of: shouldShowConfirmation) {
+                Task {
+                    //Display an alert to mark off payment.
+                    await checkoutViewModel.saveLeadDetailsToDatabase()
+                }
+
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "ResetView"),
+                                                object: nil
+                )
+
                 DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                    Task {
-                        //Display an alert to mark off payment.
-                        await checkoutViewModel.saveLeadDetailsToDatabase()
-                    }
                     router.navigateBack()
                 }
             }

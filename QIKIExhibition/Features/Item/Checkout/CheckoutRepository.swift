@@ -18,8 +18,8 @@ public protocol QCheckoutRepository {
                             andPosition position: String
     ) throws
     
-    func saveInquiryDetailsOnServer(withEntryDetails entryDetails: [InquiryRecordDetails]) async throws -> InquiryDetails
-    func getEnquieriesFromDatabase() throws -> [InquiryRecordDetails]
+    func saveInquiryDetailsOnServer(withEntryDetails entryDetails: [[String: Any]]) async throws -> InquiryDetails
+    func getEnquieriesFromDatabase() throws -> [[String: Any]]
     func updateSyncStats(for id: Int) throws
 }
 
@@ -59,18 +59,32 @@ extension CheckoutRepository {
         }
     }
     
-    public func getEnquieriesFromDatabase() throws -> [InquiryRecordDetails] {
-        var enquieries: [InquiryRecordDetails] = [InquiryRecordDetails]()
+    public func getEnquieriesFromDatabase() throws -> [[String: Any]] {
+        var allEnquieries = [[String: Any]]()
         do {
             try dbPool!.read { db in
-                enquieries = try InquiryRecordDetails.filter(Column("syncStatus") == 0).fetchAll(db)
+                let enquieries = try InquiryRecordDetails.filter(Column("syncStatus") == 0).fetchAll(db)
+                
+                if enquieries.count > 0 {
+                    for i in 0 ..< enquieries.count {
+                        let inquiry = ["id": enquieries[i].id,
+                                       "name": enquieries[i].name,
+                                       "businessName": enquieries[i].businessName,
+                                       "businessPhone": enquieries[i].businessPhone,
+                                       "businessEmail": enquieries[i].businessEmail,
+                                       "position": enquieries[i].position
+                        ]
+                                       
+                        allEnquieries.append(inquiry)
+                    }
+                }
             }
         } catch {
             Log.shared.writeToLogFile(atLevel: .error,
                                       withMessage: "An error occurred while fetching all records from database which are not synced to server.")
         }
         
-        return enquieries
+        return allEnquieries
     }
     
     public func updateSyncStats(for id: Int) throws {
@@ -92,7 +106,7 @@ extension CheckoutRepository {
 
 extension CheckoutRepository {
     
-    public func saveInquiryDetailsOnServer(withEntryDetails entryDetails: [InquiryRecordDetails]) async throws -> InquiryDetails {
+    public func saveInquiryDetailsOnServer(withEntryDetails entryDetails: [[String: Any]]) async throws -> InquiryDetails {
         try await apiClientService.request(
             APIEndpoints.saveCompetitionEntry(for: entryDetails),
             mapper: InquiryDetailsResponseMapper()
