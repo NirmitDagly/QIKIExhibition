@@ -67,7 +67,7 @@ extension CheckoutRepository {
                 
                 if enquieries.count > 0 {
                     for i in 0 ..< enquieries.count {
-                        let inquiry = ["id": enquieries[i].id,
+                        let inquiry = ["clientEntryId": enquieries[i].id,
                                        "name": enquieries[i].name,
                                        "businessName": enquieries[i].businessName,
                                        "businessPhone": enquieries[i].businessPhone,

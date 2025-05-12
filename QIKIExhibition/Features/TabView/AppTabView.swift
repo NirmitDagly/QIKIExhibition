@@ -32,13 +32,22 @@ struct AppTabView: View {
                     }
                     .tag(0)
                 
+                DrawCoordinator()
+                    .tabItem {
+                        Label("Draw Entry",
+                              systemImage: "list.clipboard"
+                        )
+                    }
+                    .tag(1)
+                
+                
                 EnquiriesCoordinator()
                     .tabItem {
                         Label("Entries",
                               systemImage: "list.clipboard"
                         )
                     }
-                    .tag(1)
+                    .tag(2)
                 
                 EFTPOSCoordinator()
                     .tabItem {
@@ -46,7 +55,7 @@ struct AppTabView: View {
                               systemImage: "australiandollarsign.bank.building"
                         )
                     }
-                    .tag(2)
+                    .tag(3)
             }
             .toolbarBackground(.visible,
                                for: .tabBar

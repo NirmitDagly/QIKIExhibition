@@ -11,14 +11,14 @@ import Network
 extension APIEndpoints {
     static func saveCompetitionEntry(for entryDetails: [[String: Any]]) -> APIEndpoint {
         return .init(
-            path: "/saveCompetitionEntry",
+            path: "/Services/DrawEntry/",
             httpMethod: .post,
             //headers: ["apiKey": UserDefaults.accessToken],
             bodyParameter: .dictionary(["entryDetails": entryDetails],
                                        options: .prettyPrinted
                                       )
             )
-    }   
+    }
 }
 
 public struct InquiryDetails: Codable {

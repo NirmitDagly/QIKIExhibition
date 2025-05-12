@@ -267,7 +267,7 @@ extension EFTPOSViewModel {
         )
         
         do {
-            async let getLinklyToken = Pairing(isProductionMode: false).initiatePairing(withTerminalNumber: selectedSerialNumber,
+            async let getLinklyToken = Pairing(isProductionMode: true).initiatePairing(withTerminalNumber: selectedSerialNumber,
                                                                                        andUsername: linklyUserName,
                                                                                        andPassword: linklyPassword,
                                                                                        andPairingCode: pinPadPairingCode,
