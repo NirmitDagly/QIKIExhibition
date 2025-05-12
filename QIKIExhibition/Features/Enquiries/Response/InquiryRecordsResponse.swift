@@ -15,6 +15,7 @@ public struct InquiryRecordDetailsResponse: Codable, Hashable {
     public var businessPhone: String
     public var businessEmail: String
     public var position: String
+    public var syncStatus: Int
     public var dateAdded: Date?
     public var dateUpdated: Date?
 }
@@ -27,6 +28,7 @@ public struct InquiryRecordDetailsResponseMapper: Mappable {
                      businessPhone: input.businessPhone,
                      businessEmail: input.businessEmail,
                      position: input.position,
+                     syncStatus: input.syncStatus,
                      dateAdded: input.dateAdded,
                      dateUpdated: input.dateUpdated
         )

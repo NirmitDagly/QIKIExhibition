@@ -15,6 +15,7 @@ public struct InquiryRecordDetails: Codable {
     public var businessPhone: String
     public var businessEmail: String
     public var position: String
+    public var syncStatus: Int
     public var dateAdded: Date?
     public var dateUpdated: Date?
     
@@ -25,6 +26,7 @@ public struct InquiryRecordDetails: Codable {
         case businessPhone
         case businessEmail
         case position
+        case syncStatus
         case dateAdded
         case dateUpdated
     }

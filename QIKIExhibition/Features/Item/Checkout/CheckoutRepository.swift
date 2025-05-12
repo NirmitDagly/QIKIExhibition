@@ -18,12 +18,9 @@ public protocol QCheckoutRepository {
                             andPosition position: String
     ) throws
     
-    func saveInquiryDetailsOnServer(withName name: String,
-                                    andBusinessName businessName: String,
-                                    andBusinessPhone businessPhone: String,
-                                    andBusinessEmail email: String,
-                                    andPosition position: String
-    ) async throws -> InquiryDetails
+    func saveInquiryDetailsOnServer(withEntryDetails entryDetails: [InquiryRecordDetails]) async throws -> InquiryDetails
+    func getEnquieriesFromDatabase() throws -> [InquiryRecordDetails]
+    func updateSyncStats(for id: Int) throws
 }
 
 public final class CheckoutRepository: QCheckoutRepository {
@@ -52,6 +49,7 @@ extension CheckoutRepository {
                                                        businessPhone: businessPhone,
                                                        businessEmail: email,
                                                        position: position,
+                                                       syncStatus: 0,
                                                        dateAdded: Date(),
                                                        dateUpdated: Date()
                 )
@@ -60,23 +58,43 @@ extension CheckoutRepository {
             }
         }
     }
+    
+    public func getEnquieriesFromDatabase() throws -> [InquiryRecordDetails] {
+        var enquieries: [InquiryRecordDetails] = [InquiryRecordDetails]()
+        do {
+            try dbPool!.read { db in
+                enquieries = try InquiryRecordDetails.filter(Column("syncStatus") == 0).fetchAll(db)
+            }
+        } catch {
+            Log.shared.writeToLogFile(atLevel: .error,
+                                      withMessage: "An error occurred while fetching all records from database which are not synced to server.")
+        }
+        
+        return enquieries
+    }
+    
+    public func updateSyncStats(for id: Int) throws {
+        do {
+            try dbPool!.write { db in
+                if let record = try InquiryRecordDetails.filter(Column("id") == id).fetchOne(db) {
+                    var updatedRecord = record
+                    updatedRecord.syncStatus = 1
+                    try updatedRecord.update(db)
+                }
+            }
+        } catch {
+            Log.shared.writeToLogFile(atLevel: .error,
+                                      withMessage: "An error occurred while updating sync status for enquiery record with id: \(id)."
+            )
+        }
+    }
 }
 
 extension CheckoutRepository {
     
-    public func saveInquiryDetailsOnServer(withName name: String,
-                                           andBusinessName businessName: String,
-                                           andBusinessPhone businessPhone: String,
-                                           andBusinessEmail email: String,
-                                           andPosition position: String
-    ) async throws -> InquiryDetails {
+    public func saveInquiryDetailsOnServer(withEntryDetails entryDetails: [InquiryRecordDetails]) async throws -> InquiryDetails {
         try await apiClientService.request(
-            APIEndpoints.saveCompetitionEntry(withName: name,
-                                              andBusinessName: businessName,
-                                              andBusinessEmail: email,
-                                              andPhoneNumber: businessPhone,
-                                              andPosition: position
-                                            ),
+            APIEndpoints.saveCompetitionEntry(for: entryDetails),
             mapper: InquiryDetailsResponseMapper()
         )
     }

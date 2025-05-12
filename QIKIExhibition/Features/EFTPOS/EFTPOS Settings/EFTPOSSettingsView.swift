@@ -118,6 +118,24 @@ struct EFTPOSSettingsView: View {
             Text("\(eftposSettingsViewModel.alertMessage)")
         }
         )
+        .customAlert("ALERT",
+                     isPresented: $eftposSettingsViewModel.displayNetworkAlert,
+                     showingCancelButton: $eftposSettingsViewModel.shouldShowCancelButton,
+                     actionText: "Ok",
+                     actionOnDismiss: {
+            Log.shared.writeToLogFile(atLevel: .info,
+                                      withMessage: "User tapped on cancel button in alert message. Message: \(eftposSettingsViewModel.alertMessage)"
+            )
+        },
+                     action: {
+            Log.shared.writeToLogFile(atLevel: .info,
+                                      withMessage: "\($eftposSettingsViewModel.alertMessage)"
+            )
+        },
+                     message: {
+            Text("\(eftposSettingsViewModel.alertMessage)")
+        }
+        )
         .ignoresSafeArea(.keyboard,
                          edges: .bottom
         )
@@ -740,8 +758,12 @@ struct PairButtonView: View {
                     return
                 }
                 
-                Task {
-                    await eftposSettingsViewModel.getLinklySecret()
+                if isNetworkReachable() {
+                    Task {
+                        await eftposSettingsViewModel.getLinklySecret()
+                    }
+                } else {
+                    eftposSettingsViewModel.networkAlertMessage()
                 }
             }
         } label: {

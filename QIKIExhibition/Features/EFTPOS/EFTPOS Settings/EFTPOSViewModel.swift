@@ -52,6 +52,8 @@ final class EFTPOSViewModel: ObservableObject {
     
     @Published public var displayErrorAlert = false
     
+    @Published public var displayNetworkAlert = false
+    
     @Published var shouldShowCancelButton = false
     
     @Published var alertMessage = ""
@@ -76,6 +78,12 @@ final class EFTPOSViewModel: ObservableObject {
             case .error:
                 return DisplayMessage.error.rawValue
         }
+    }
+    
+    public func networkAlertMessage() {
+        alertMessage = DisplayMessage.networkError.rawValue
+        shouldShowCancelButton = false
+        displayNetworkAlert = true
     }
     
     public func resetEFTPOSDetails() {

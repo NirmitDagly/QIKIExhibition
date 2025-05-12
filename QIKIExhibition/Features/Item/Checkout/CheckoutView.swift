@@ -793,7 +793,11 @@ fileprivate struct PayNowView: View {
                     checkoutViewModel.shouldShowCancelButton = false
                     checkoutViewModel.displayErrorAlert = true
                 } else {
-                    checkoutViewModel.shouldShowTransactionView = true
+                    if isNetworkReachable() {
+                        checkoutViewModel.shouldShowTransactionView = true
+                    } else {
+                        checkoutViewModel.networkAlertMessage()
+                    }
                 }
             } else {
                 shouldShowConfirmation = true

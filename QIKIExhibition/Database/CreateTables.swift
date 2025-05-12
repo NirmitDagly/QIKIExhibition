@@ -37,6 +37,7 @@ public class CreateTables {
                     t.column("businessPhone", .text)
                     t.column("businessEmail", .text)
                     t.column("position", .text)
+                    t.column("syncStatus", .integer)
                     t.column("dateAdded", .datetime)
                     t.column("dateUpdated", .datetime)
                 }

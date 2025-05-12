@@ -82,6 +82,12 @@ final class CheckoutViewModel: ObservableObject {
     init(repository: CheckoutRepository) {
         self.repository = repository
     }
+    
+    public func networkAlertMessage() {
+        alertMessage = DisplayMessage.networkError.rawValue
+        shouldShowCancelButton = false
+        displayNetworkAlert = true
+    }
 }
 
 extension CheckoutViewModel {
@@ -152,50 +158,56 @@ extension CheckoutViewModel {
 extension CheckoutViewModel {
     
     public func saveEnquiryDetailsOnServer() async {
-        do {
-            async let serverResponse = repository.saveInquiryDetailsOnServer(withName: name,
-                                                                             andBusinessName: businessName,
-                                                                             andBusinessPhone: businessPhone,
-                                                                             andBusinessEmail: businessEmail,
-                                                                             andPosition: position
-            )
-            
-            guard let serverResponseDetails = try? await serverResponse else {
-                Log.shared.writeToLogFile(atLevel: .error,
-                                          withMessage: "Last inquiry detail could not be saved on the server..."
+        if isNetworkReachable() {
+            do {
+                let allEnquiries = try repository.getEnquieriesFromDatabase()
+                async let serverResponse = repository.saveInquiryDetailsOnServer(withEntryDetails: allEnquiries)
+                
+                guard let serverResponseDetails = try? await serverResponse else {
+                    Log.shared.writeToLogFile(atLevel: .error,
+                                              withMessage: "Last inquiry detail could not be saved on the server..."
+                    )
+                    
+                    return
+                }
+                
+                Log.shared.writeToLogFile(atLevel: .info,
+                                          withMessage: "Inquiry record details has been stored on the server with \(serverResponseDetails)."
                 )
                 
-                return
+                if serverResponseDetails.success == 1 && serverResponseDetails.syncIds != nil && serverResponseDetails.syncIds!.count > 0 {
+                    for i in 0 ..< serverResponseDetails.syncIds!.count {
+                        try repository.updateSyncStats(for: serverResponseDetails.syncIds![i])
+                    }
+                }
+            } catch APIError.invalidEndpoint {
+                print("Invalid end point...")
+                Log.shared.writeToLogFile(atLevel: .info,
+                                          withMessage: "Last inquiry record has been stored on the server because of invalid end point."
+                )
+            } catch APIError.badServerResponse {
+                print("Bad server response...")
+                Log.shared.writeToLogFile(atLevel: .info,
+                                          withMessage: "Last inquiry record has been stored on the server because of bad server response."
+                )
+            } catch APIError.networkError {
+                print("Network error...")
+                Log.shared.writeToLogFile(atLevel: .info,
+                                          withMessage: "Last inquiry record has been stored on the server because of network error."
+                )
+            } catch APIError.parsing {
+                print("Parsing error...")
+                Log.shared.writeToLogFile(atLevel: .info,
+                                          withMessage: "Last inquiry record has been stored on the server because of parsing error."
+                )
+            } catch {
+                print("Unkonwn error occurred...")
+                Log.shared.writeToLogFile(atLevel: .info,
+                                          withMessage: "Last inquiry record has been stored on the server because of unknonwn error."
+                )
             }
-            
-            Log.shared.writeToLogFile(atLevel: .info,
-                                      withMessage: "Last inquiry record has been stored on the server with \(serverResponseDetails)."
-            )
-        } catch APIError.invalidEndpoint {
-            print("Invalid end point...")
-            Log.shared.writeToLogFile(atLevel: .info,
-                                      withMessage: "Last inquiry record has been stored on the server because of invalid end point."
-            )
-        } catch APIError.badServerResponse {
-            print("Bad server response...")
-            Log.shared.writeToLogFile(atLevel: .info,
-                                      withMessage: "Last inquiry record has been stored on the server because of bad server response."
-            )
-        } catch APIError.networkError {
-            print("Network error...")
-            Log.shared.writeToLogFile(atLevel: .info,
-                                      withMessage: "Last inquiry record has been stored on the server because of network error."
-            )
-        } catch APIError.parsing {
-            print("Parsing error...")
-            Log.shared.writeToLogFile(atLevel: .info,
-                                      withMessage: "Last inquiry record has been stored on the server because of parsing error."
-            )
-        } catch {
-            print("Unkonwn error occurred...")
-            Log.shared.writeToLogFile(atLevel: .info,
-                                      withMessage: "Last inquiry record has been stored on the server because of unknonwn error."
-            )
+        } else {
+            networkAlertMessage()
         }
     }
 }
