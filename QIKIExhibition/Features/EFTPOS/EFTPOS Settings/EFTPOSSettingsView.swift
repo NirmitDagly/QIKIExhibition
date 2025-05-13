@@ -142,7 +142,7 @@ struct EFTPOSSettingsView: View {
     }
 }
 
-struct TitleView: View {
+fileprivate struct TitleView: View {
     
     var title: String
     
@@ -163,7 +163,7 @@ struct TitleView: View {
     }
 }
 
-struct PinpadPairingStatusView: View {
+fileprivate struct PinpadPairingStatusView: View {
     
     @ObservedObject var eftposViewModel: EFTPOSViewModel
     
@@ -208,7 +208,7 @@ struct PinpadPairingStatusView: View {
     }
 }
 
-struct CheckPinpadButtonView: View {
+fileprivate struct CheckPinpadButtonView: View {
     
     @ObservedObject var eftposSettingsViewModel: EFTPOSViewModel
     
@@ -242,7 +242,7 @@ struct CheckPinpadButtonView: View {
     }
 }
 
-struct EFTPOSConfigurationView: View {
+fileprivate struct EFTPOSConfigurationView: View {
     
     @ObservedObject var eftposViewModel: EFTPOSViewModel
     
@@ -255,7 +255,7 @@ struct EFTPOSConfigurationView: View {
     }
 }
 
-struct LabelView: View {
+fileprivate struct LabelView: View {
     
     var body: some View {
         VStack(spacing: 10) {
@@ -280,7 +280,7 @@ struct LabelView: View {
     }
 }
 
-struct TextFieldsView: View {
+fileprivate struct TextFieldsView: View {
     
     @State private var isShowingPicker = false
     
@@ -410,7 +410,7 @@ struct TextFieldsView: View {
     }
 }
 
-struct EFTPOSKeypadView: View {
+fileprivate struct EFTPOSKeypadView: View {
     
     @ObservedObject var eftposSettingsViewModel: EFTPOSViewModel
 
@@ -458,7 +458,7 @@ struct EFTPOSKeypadView: View {
     }
 }
 
-struct Row1View: View {
+fileprivate struct Row1View: View {
     
     @ObservedObject var eftposSettingsViewModel: EFTPOSViewModel
     
@@ -530,7 +530,7 @@ struct Row1View: View {
     }
 }
 
-struct Row2View: View {
+fileprivate struct Row2View: View {
     
     @ObservedObject var eftposSettingsViewModel: EFTPOSViewModel
     
@@ -601,7 +601,7 @@ struct Row2View: View {
     }
 }
 
-struct Row3View: View {
+fileprivate struct Row3View: View {
     
     @ObservedObject var eftposSettingsViewModel: EFTPOSViewModel
     
@@ -672,7 +672,7 @@ struct Row3View: View {
     }
 }
 
-struct Row4View: View {
+fileprivate struct Row4View: View {
 
     @ObservedObject var eftposSettingsViewModel: EFTPOSViewModel
     
@@ -743,7 +743,7 @@ struct Row4View: View {
     }
 }
 
-struct PairButtonView: View {
+fileprivate struct PairButtonView: View {
     
     @ObservedObject var eftposSettingsViewModel: EFTPOSViewModel
     
@@ -794,7 +794,7 @@ struct PairButtonView: View {
     }
 }
 
-struct InstructionView: View {
+fileprivate struct InstructionView: View {
 
     @ObservedObject var eftposViewModel: EFTPOSViewModel
     
@@ -811,7 +811,7 @@ struct InstructionView: View {
     }
 }
 
-struct InstructionWebDetailView: UIViewRepresentable {
+fileprivate struct InstructionWebDetailView: UIViewRepresentable {
  
     var dataToShow: Data
     

@@ -1,8 +1,8 @@
 //
-//  CheckoutViewModel.swift
+//  DrawViewModel.swift
 //  QIKIExhibition
 //
-//  Created by Miamedia on 6/5/2025.
+//  Created by Miamedia on 13/5/2025.
 //
 
 import Foundation
@@ -12,28 +12,9 @@ import Logger
 import Linkly
 import GRDB
 
-enum CheckoutViewState {
-    case overrideAsPaid
-    case error
-}
-
-enum FocusableField {
-    case name
-    case businessName
-    case businessPhone
-    case businessEmail
-    case position
-}
-
-final class CheckoutViewModel: ObservableObject {
+final class DrawViewModel: ObservableObject {
     
-    private let repository: CheckoutRepository
-    
-    @Published public var itemsInDocket = [Product]()
-    
-    @Published public var subTotal = "0.00"
-    
-    @Published public var totalPayableAmount = "0.00"
+    private let repository: DrawRepository
     
     @Published public var name = ""
     
@@ -44,7 +25,7 @@ final class CheckoutViewModel: ObservableObject {
     @Published public var businessEmail = ""
     
     @Published var shouldShowPositionList = false
-    
+
     @Published public var position = ""
 
     @Published public var selectedPaymentMethod = PaymentMethod.card
@@ -68,7 +49,7 @@ final class CheckoutViewModel: ObservableObject {
     
     @Published public var alertMessage = ""
         
-    init(repository: CheckoutRepository) {
+    init(repository: DrawRepository) {
         self.repository = repository
     }
     
@@ -79,42 +60,16 @@ final class CheckoutViewModel: ObservableObject {
     }
 }
 
-extension CheckoutViewModel {
-    
-    public func updatePaymentMethodOnSelection(paymentMethod: Int) {
-        if paymentMethod == 0 {
-            selectedPaymentMethod = PaymentMethod.card
-        } else {
-            selectedPaymentMethod = PaymentMethod.cash
-        }
-        
-        getPayButtonTitle()
-    }
-    
-    //MARK: Change 'Pay' button title on change of payment method
-    public func getPayButtonTitle() {
-        if selectedPaymentMethod == PaymentMethod.card {
-            payButtonTitle = "Pay By \(PaymentMethod.card.rawValue)"
-        } else {
-            payButtonTitle = "Pay By \(PaymentMethod.cash.rawValue)"
-        }
-    }
-    
-    //MARK: Calculate final payable amount
-    public func finalPayableAmount() {
-        transactionAmount = Calculator.shared.calculateSubTotal(forProductsInCart: itemsInDocket)
-    }
-}
 
-extension CheckoutViewModel {
+extension DrawViewModel {
     
     public func saveLeadDetailsToDatabase() async {
         do {
-            try repository.saveInquiryDetails(withName: name,
-                                              andBusinessName: businessName,
-                                              andBusinessPhone: businessPhone,
-                                              andBusinessEmail: businessEmail,
-                                              andPosition: position
+            try repository.saveInquiryDetailsToDatabase(withName: name,
+                                                        andBusinessName: businessName,
+                                                        andBusinessPhone: businessPhone,
+                                                        andBusinessEmail: businessEmail,
+                                                        andPosition: position
             )
             
             await saveEnquiryDetailsOnServer()
@@ -122,15 +77,12 @@ extension CheckoutViewModel {
             //Error logged at repository level...
         }
     }
-}
-
-extension CheckoutViewModel {
     
     public func saveEnquiryDetailsOnServer() async {
         if isNetworkReachable() {
             do {
-                let allEnquiries = try repository.getEnquieriesFromDatabase()
-                async let serverResponse = repository.saveInquiryDetailsOnServer(withEntryDetails: allEnquiries)
+                let allEnquiries = try repository.getEnquieries()
+                async let serverResponse = repository.saveInquiryDetails(withEntryDetails: allEnquiries)
                 
                 guard let serverResponseDetails = try? await serverResponse else {
                     Log.shared.writeToLogFile(atLevel: .error,
@@ -146,7 +98,7 @@ extension CheckoutViewModel {
                 
                 if serverResponseDetails.success == 1 && serverResponseDetails.syncIds != nil && serverResponseDetails.syncIds!.count > 0 {
                     for i in 0 ..< serverResponseDetails.syncIds!.count {
-                        try repository.updateSyncStats(for: serverResponseDetails.syncIds![i])
+                        try repository.updateSyncStatusToDatabase(for: serverResponseDetails.syncIds![i])
                     }
                 }
             } catch APIError.invalidEndpoint {

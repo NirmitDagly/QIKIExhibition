@@ -18,3 +18,8 @@ public struct Product: Codable, Hashable {
     var qty: Int
     var price: Int
 }
+
+public struct Position: Codable, Hashable {
+    var id: Int
+    var name: String
+}

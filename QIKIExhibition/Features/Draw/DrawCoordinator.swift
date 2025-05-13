@@ -18,7 +18,7 @@ struct DrawCoordinator: View {
     @EnvironmentObject var router: Router
 
     var body: some View {
-        DrawView(repository: CheckoutRepository(apiClientService: configuration.apiClientService))
+        DrawView(repository: DrawRepository(apiClientService: configuration.apiClientService))
     }
 }
 

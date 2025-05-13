@@ -1,44 +1,43 @@
 //
-//  CheckoutRepository.swift
+//  DrawRepository.swift
 //  QIKIExhibition
 //
-//  Created by Miamedia on 6/5/2025.
+//  Created by Miamedia on 13/5/2025.
 //
 
 import Foundation
 import Network
 import GRDB
 
-public protocol QCheckoutRepository {
+public protocol QDrawRepository {
     
-    func saveInquiryDetails(withName name: String,
-                            andBusinessName businessName: String,
-                            andBusinessPhone businessPhone: String,
-                            andBusinessEmail email: String,
-                            andPosition position: String
+    func saveInquiryDetailsToDatabase(withName name: String,
+                                      andBusinessName businessName: String,
+                                      andBusinessPhone businessPhone: String,
+                                      andBusinessEmail email: String,
+                                      andPosition position: String
     ) throws
     
-    func saveInquiryDetailsOnServer(withEntryDetails entryDetails: [[String: Any]]) async throws -> InquiryDetails
-    func getEnquieriesFromDatabase() throws -> [[String: Any]]
-    func updateSyncStats(for id: Int) throws
+    func saveInquiryDetails(withEntryDetails entryDetails: [[String: Any]]) async throws -> InquiryDetails
+    func getEnquieries() throws -> [[String: Any]]
+    func updateSyncStatusToDatabase(for id: Int) throws
 }
 
-public final class CheckoutRepository: QCheckoutRepository {
-    
-    let apiClientService: APIClientService
+public final class DrawRepository: QDrawRepository {
+    private let apiClientService: APIClientService
     
     public init(apiClientService: APIClientService) {
         self.apiClientService = apiClientService
     }
 }
 
-extension CheckoutRepository {
+extension DrawRepository {
     
-    public func saveInquiryDetails(withName name: String,
-                                   andBusinessName businessName: String,
-                                   andBusinessPhone businessPhone: String,
-                                   andBusinessEmail email: String,
-                                   andPosition position: String
+    public func saveInquiryDetailsToDatabase(withName name: String,
+                                             andBusinessName businessName: String,
+                                             andBusinessPhone businessPhone: String,
+                                             andBusinessEmail email: String,
+                                             andPosition position: String
     ) throws {
         do {
             try dbPool!.write { db in
@@ -59,7 +58,7 @@ extension CheckoutRepository {
         }
     }
     
-    public func getEnquieriesFromDatabase() throws -> [[String: Any]] {
+    public func getEnquieries() throws -> [[String: Any]] {
         var allEnquieries = [[String: Any]]()
         do {
             try dbPool!.read { db in
@@ -87,7 +86,7 @@ extension CheckoutRepository {
         return allEnquieries
     }
     
-    public func updateSyncStats(for id: Int) throws {
+    public func updateSyncStatusToDatabase(for id: Int) throws {
         do {
             try dbPool!.write { db in
                 if let record = try InquiryRecordDetails.filter(Column("id") == id).fetchOne(db) {
@@ -104,9 +103,9 @@ extension CheckoutRepository {
     }
 }
 
-extension CheckoutRepository {
+extension DrawRepository {
     
-    public func saveInquiryDetailsOnServer(withEntryDetails entryDetails: [[String: Any]]) async throws -> InquiryDetails {
+    public func saveInquiryDetails(withEntryDetails entryDetails: [[String: Any]]) async throws -> InquiryDetails {
         try await apiClientService.request(
             APIEndpoints.saveCompetitionEntry(for: entryDetails),
             mapper: InquiryDetailsResponseMapper()

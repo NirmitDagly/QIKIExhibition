@@ -28,28 +28,28 @@ struct DrawView: View {
     
     @State var shouldShowConfirmation = false
     
-    @StateObject var checkoutViewModel: CheckoutViewModel
+    @StateObject var drawViewModel: DrawViewModel
     
     @FocusState var focusedField: FocusableField?
     
     @EnvironmentObject var configuration: Configuration
     
-    init(repository: CheckoutRepository) {
-        _checkoutViewModel = .init(wrappedValue: CheckoutViewModel(repository: repository))
+    init(repository: DrawRepository) {
+        _drawViewModel = .init(wrappedValue: DrawViewModel(repository: repository))
     }
     
     var body: some View {
         ZStack {
             VStack {
                 DrawTitleView(title: titleText,
-                              checkoutViewModel: checkoutViewModel
+                              drawViewModel: drawViewModel
                 )
                 
                 Spacer()
                 
                 ScrollView {
                     CustomerNameView(name: $name,
-                                     checkoutViewModel: checkoutViewModel,
+                                     drawViewModel: drawViewModel,
                                      focused: $focusedField
                     )
                     .padding([.top, .bottom],
@@ -57,7 +57,7 @@ struct DrawView: View {
                     )
                     
                     BusinessNameView(businessName: $businessName,
-                                     checkoutViewModel: checkoutViewModel,
+                                     drawViewModel: drawViewModel,
                                      focused: $focusedField
                     )
                     .padding([.top, .bottom],
@@ -65,7 +65,7 @@ struct DrawView: View {
                     )
                     
                     BusinessEmailView(email: $email,
-                                      checkoutViewModel: checkoutViewModel,
+                                      drawViewModel: drawViewModel,
                                       focused: $focusedField
                     )
                     .padding([.top, .bottom],
@@ -73,7 +73,7 @@ struct DrawView: View {
                     )
                     
                     BusinessPhoneView(phone: $phone,
-                                      checkoutViewModel: checkoutViewModel,
+                                      drawViewModel: drawViewModel,
                                       focused: $focusedField
                     )
                     .padding([.top, .bottom],
@@ -81,10 +81,13 @@ struct DrawView: View {
                     )
                     
                     BusinessPositionView(position: $position,
-                                         checkoutViewModel: checkoutViewModel
+                                         drawViewModel: drawViewModel
                     )
-                    .padding([.top, .bottom],
+                    .padding(.top,
                              10
+                    )
+                    .padding(.bottom,
+                             30
                     )
                     
                     SaveEntryView(name: $name,
@@ -93,24 +96,35 @@ struct DrawView: View {
                                   phone: $phone,
                                   position: $position,
                                   shouldShowConfirmation: $shouldShowConfirmation,
-                                  checkoutViewModel: checkoutViewModel
+                                  drawViewModel: drawViewModel
                     )
                     .padding(.bottom,
                              30
                     )
                 }
                 .scrollIndicators(.hidden)
+                .frame(width: 700)
                 
                 Spacer()
             }
             
-            if checkoutViewModel.shouldShowTransactionView == true {
+            if drawViewModel.shouldShowPositionList {
                 BackgroundView()
                 
-                TransactionView(checkoutViewModel: checkoutViewModel)
+                PositionListView(position: $position,
+                                 drawViewModel: drawViewModel
+                )
+            } else {
+                BackgroundView()
+                    .hidden()
+                
+                PositionListView(position: $position,
+                                 drawViewModel: drawViewModel
+                )
+                .hidden()
             }
             
-            if shouldShowConfirmation == true {
+            if shouldShowConfirmation {
                 BackgroundView()
                 
                 EntryConfirmationView()
@@ -123,73 +137,76 @@ struct DrawView: View {
             }
         }
         .onChange(of: shouldShowConfirmation) {
-            Task {
-                //Display an alert to mark off payment.
-                await checkoutViewModel.saveLeadDetailsToDatabase()
+            if shouldShowConfirmation == true {
+                print(position)
+                Task {
+                    //Display an alert to mark off payment.
+                    await drawViewModel.saveLeadDetailsToDatabase()
+                }
+                
+                name = ""
+                businessName = ""
+                email = ""
+                phone = ""
+                position = ""
             }
-            
-            name = ""
-            businessName = ""
-            email = ""
-            phone = ""
-            position = ""
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                 shouldShowConfirmation = false
             }
         }
         .customAlert("ALERT",
-                        isPresented: $checkoutViewModel.displayErrorAlert,
-                        showingCancelButton: $checkoutViewModel.shouldShowCancelButton,
+                        isPresented: $drawViewModel.displayErrorAlert,
+                        showingCancelButton: $drawViewModel.shouldShowCancelButton,
                         actionText: "Ok",
                         actionOnDismiss: {
             Log.shared.writeToLogFile(atLevel: .info,
-                                        withMessage: "User tapped on cancel button in alert message. Message: \(checkoutViewModel.alertMessage)"
+                                        withMessage: "User tapped on cancel button in alert message. Message: \(drawViewModel.alertMessage)"
             )
         },
                         action: {
             Log.shared.writeToLogFile(atLevel: .info,
-                                        withMessage: "\(checkoutViewModel.alertMessage)"
+                                        withMessage: "\(drawViewModel.alertMessage)"
             )
         },
                         message: {
-            Text("\(checkoutViewModel.alertMessage)")
+            Text("\(drawViewModel.alertMessage)")
         }
         )
         .customAlert("ALERT",
-                        isPresented: $checkoutViewModel.displaySuccessAlert,
-                        showingCancelButton: $checkoutViewModel.shouldShowCancelButton,
+                        isPresented: $drawViewModel.displaySuccessAlert,
+                        showingCancelButton: $drawViewModel.shouldShowCancelButton,
                         actionText: "Ok",
                         actionOnDismiss: {
             Log.shared.writeToLogFile(atLevel: .info,
-                                        withMessage: "User tapped on cancel button in alert message. Message: \(checkoutViewModel.alertMessage)"
+                                        withMessage: "User tapped on cancel button in alert message. Message: \(drawViewModel.alertMessage)"
             )
         },
                         action: {
             Log.shared.writeToLogFile(atLevel: .info,
-                                        withMessage: "\(checkoutViewModel.alertMessage)"
+                                        withMessage: "\(drawViewModel.alertMessage)"
             )
         },
                         message: {
-            Text("\(checkoutViewModel.alertMessage)")
+            Text("\(drawViewModel.alertMessage)")
         }
         )
         .customAlert("ALERT",
-                        isPresented: $checkoutViewModel.displayNetworkAlert,
-                        showingCancelButton: $checkoutViewModel.shouldShowCancelButton,
+                        isPresented: $drawViewModel.displayNetworkAlert,
+                        showingCancelButton: $drawViewModel.shouldShowCancelButton,
                         actionText: "Ok",
                         actionOnDismiss: {
             Log.shared.writeToLogFile(atLevel: .info,
-                                        withMessage: "User tapped on cancel button in alert message. Message: \(checkoutViewModel.alertMessage)"
+                                        withMessage: "User tapped on cancel button in alert message. Message: \(drawViewModel.alertMessage)"
             )
         },
                         action: {
             Log.shared.writeToLogFile(atLevel: .info,
-                                        withMessage: "\(checkoutViewModel.alertMessage)"
+                                        withMessage: "\(drawViewModel.alertMessage)"
             )
         },
                         message: {
-            Text("\(checkoutViewModel.alertMessage)")
+            Text("\(drawViewModel.alertMessage)")
         }
         )
     }
@@ -201,7 +218,7 @@ fileprivate struct DrawTitleView: View {
     
     @State private var shouldShowOptions = false
     
-    @ObservedObject var checkoutViewModel: CheckoutViewModel
+    @ObservedObject var drawViewModel: DrawViewModel
     
     var body: some View {
         HStack() {
@@ -229,7 +246,7 @@ fileprivate struct CustomerNameView: View {
     
     @Binding var name: String
     
-    @ObservedObject var checkoutViewModel: CheckoutViewModel
+    @ObservedObject var drawViewModel: DrawViewModel
     
     var focused: FocusState<FocusableField?>.Binding
     
@@ -238,7 +255,7 @@ fileprivate struct CustomerNameView: View {
             Text("Customer Name:")
                 .frame(width: 200,
                        height: 50,
-                       alignment: .leading
+                       alignment: .trailing
                 )
                 .font(.demiBoldFontWithSize(withSize: 20))
                 .padding(.leading,
@@ -270,7 +287,7 @@ fileprivate struct CustomerNameView: View {
                     return
                 }
                 
-                checkoutViewModel.name = name
+                drawViewModel.name = name
                 focused.wrappedValue = FocusableField.businessName
             }
             .padding(.trailing,
@@ -284,7 +301,7 @@ fileprivate struct BusinessNameView: View {
     
     @Binding var businessName: String
     
-    @ObservedObject var checkoutViewModel: CheckoutViewModel
+    @ObservedObject var drawViewModel: DrawViewModel
     
     var focused: FocusState<FocusableField?>.Binding
     
@@ -293,7 +310,7 @@ fileprivate struct BusinessNameView: View {
             Text("Business Name:")
                 .frame(width: 200,
                        height: 50,
-                       alignment: .leading
+                       alignment: .trailing
                 )
                 .font(.demiBoldFontWithSize(withSize: 20))
                 .padding(.leading,
@@ -328,7 +345,7 @@ fileprivate struct BusinessNameView: View {
                     return
                 }
                 
-                checkoutViewModel.businessName = businessName
+                drawViewModel.businessName = businessName
                 focused.wrappedValue = .businessEmail
             }
             .padding(.trailing,
@@ -342,7 +359,7 @@ fileprivate struct BusinessEmailView: View {
     
     @Binding var email: String
         
-    @ObservedObject var checkoutViewModel: CheckoutViewModel
+    @ObservedObject var drawViewModel: DrawViewModel
     
     var focused: FocusState<FocusableField?>.Binding
     
@@ -351,7 +368,7 @@ fileprivate struct BusinessEmailView: View {
             Text("Business Email:")
                 .frame(width: 200,
                        height: 50,
-                       alignment: .leading
+                       alignment: .trailing
                 )
                 .font(.demiBoldFontWithSize(withSize: 20))
                 .padding(.leading,
@@ -387,7 +404,7 @@ fileprivate struct BusinessEmailView: View {
                     return
                 }
                 
-                checkoutViewModel.businessEmail = email
+                drawViewModel.businessEmail = email
                 focused.wrappedValue = .businessPhone
             }
             .padding(.trailing,
@@ -401,7 +418,7 @@ fileprivate struct BusinessPhoneView: View {
     
     @Binding var phone: String
     
-    @ObservedObject var checkoutViewModel: CheckoutViewModel
+    @ObservedObject var drawViewModel: DrawViewModel
     
     var focused: FocusState<FocusableField?>.Binding
     
@@ -410,7 +427,7 @@ fileprivate struct BusinessPhoneView: View {
             Text("Business Phone:")
                 .frame(width: 200,
                        height: 50,
-                       alignment: .leading
+                       alignment: .trailing
                 )
                 .font(.demiBoldFontWithSize(withSize: 20))
                 .padding(.leading,
@@ -446,7 +463,7 @@ fileprivate struct BusinessPhoneView: View {
                     return
                 }
                 
-                checkoutViewModel.businessPhone = phone
+                drawViewModel.businessPhone = phone
             }
             .padding(.trailing,
                      20
@@ -461,56 +478,42 @@ fileprivate struct BusinessPositionView: View {
     
     @Binding var position: String
     
-    @ObservedObject var checkoutViewModel: CheckoutViewModel
+    @ObservedObject var drawViewModel: DrawViewModel
     
     var body: some View {
-        GeometryReader { geometryReader in
-            HStack {
-                Text("Position:")
-                    .frame(width: 200,
-                           height: 50,
-                           alignment: .leading
-                    )
-                    .font(.demiBoldFontWithSize(withSize: 20))
-                
-                Text(position)
-                    .frame(width: geometryReader.size.width - 580,
-                           height: 50,
-                           alignment: .leading
-                    )
-                    .font(.mediumFontWithSize(withSize: 16))
-                    .padding(.horizontal,
-                             20
-                    )
-                    .cornerRadius(10,
-                                  corners: .allCorners
-                    )
-                    .border(Color.gray)
-                    .onTapGesture {
-                        isShowingPicker = true
-                    }
-                    .popover(isPresented: $isShowingPicker) {
-                        Picker("",
-                               selection: $position
-                        ) {
-                            ForEach(checkoutViewModel.positionList,
-                                    id: \.self
-                            ) {
-                                Text($0)
-                            }
-                        }
-                        .pickerStyle(.wheel)
-                        .labelsHidden()
-                        .onChange(of: position) {
-                            isShowingPicker = false
-                            checkoutViewModel.position = position
-                        }
-                    }
-                    .padding(.trailing,
-                             20
-                    )
-            }
-            .frame(width: geometryReader.size.width)
+        HStack {
+            Text("Position:")
+                .frame(width: 200,
+                       height: 50,
+                       alignment: .trailing
+                )
+                .font(.demiBoldFontWithSize(withSize: 20))
+                .padding(.leading,
+                         20
+                )
+                .padding(.trailing,
+                         10
+                )
+            
+            Text(position)
+                .frame(width: 460,
+                       height: 50,
+                       alignment: .leading
+                )
+                .font(.mediumFontWithSize(withSize: 16))
+                .padding(.horizontal,
+                         20
+                )
+                .cornerRadius(10,
+                              corners: .allCorners
+                )
+                .border(Color.gray)
+                .onTapGesture {
+                    drawViewModel.shouldShowPositionList = true
+                }
+                .padding(.trailing,
+                         20
+                )
         }
     }
 }
@@ -529,7 +532,7 @@ fileprivate struct SaveEntryView: View {
     
     @Binding var shouldShowConfirmation: Bool
     
-    @ObservedObject var checkoutViewModel: CheckoutViewModel
+    @ObservedObject var drawViewModel: DrawViewModel
     
     var body: some View {
         Button {
@@ -540,21 +543,21 @@ fileprivate struct SaveEntryView: View {
                   phone != "",
                   position != ""
             else {
-                checkoutViewModel.alertMessage = "One of the following field is empty:\nName\nBusiness Name\nBusiness Email\nBusiness Phone\nPosition at business."
-                checkoutViewModel.shouldShowCancelButton = false
-                checkoutViewModel.displayErrorAlert = true
+                drawViewModel.alertMessage = "One of the following field is empty:\nName\nBusiness Name\nBusiness Email\nBusiness Phone\nPosition at business."
+                drawViewModel.shouldShowCancelButton = false
+                drawViewModel.displayErrorAlert = true
                 
                 return
             }
             
-            checkoutViewModel.name = name
-            checkoutViewModel.businessName = businessName
-            checkoutViewModel.businessEmail = email
-            checkoutViewModel.businessPhone = phone
-            checkoutViewModel.position = position
+            drawViewModel.name = name
+            drawViewModel.businessName = businessName
+            drawViewModel.businessEmail = email
+            drawViewModel.businessPhone = phone
+            drawViewModel.position = position
             
             Log.shared.writeToLogFile(atLevel: .info,
-                                      withMessage: "User is entering the following lead details: \nName: \(name), \nBusiness Name: \(businessName), \nBusiness Email: \(email), \nBusiness Phone: \(phone), \nPosition: \(position)."
+                                      withMessage: "User is entering the following lead details: \nName: \(name), \nBusiness Name: \(businessName), \nBusiness Email: \(email), \nBusiness Phone: \(phone), \nPosition: \(drawViewModel.position)."
             )
             
             shouldShowConfirmation = true
@@ -646,6 +649,104 @@ fileprivate struct EntryConfirmationView: View {
     }
 }
 
+fileprivate struct PositionListView: View {
+    
+    @Binding var position: String
+    
+    @ObservedObject var drawViewModel: DrawViewModel
+    
+    var body: some View {
+        GeometryReader { geometryReader in
+            VStack {
+                HStack {
+                    Button {
+                        position = ""
+                        drawViewModel.shouldShowPositionList = false
+                    } label: {
+                        Image(systemName: "xmark")
+                            .resizable()
+                            .frame(width: 30,
+                                   height: 30
+                            )
+                            .padding(.leading,
+                                     20
+                            )
+                    }
+                    
+                    Spacer()
+                    
+                    Text("Choose Position")
+                        .frame(height: 50,
+                               alignment: .center
+                        )
+                        .font(.demiBoldFontWithSize(withSize: 18))
+                        .padding(.bottom,
+                                 20
+                        )
+                    
+                    Spacer()
+                }
+                
+                List {
+                    Section {
+                        ForEach(positionList,
+                                id: \.id
+                        ) { allPositions in
+                            HStack {
+                                Button {
+                                    //Select position
+                                    position = allPositions.name
+                                    drawViewModel.shouldShowPositionList = false
+                                } label: {
+                                    Text(allPositions.name)
+                                        .frame(height: 50)
+                                        .font(.mediumFontWithSize(withSize: 18))
+                                        .foregroundStyle(Color.qikiColor)
+                                }
+                                .frame(height: 50)
+                                
+                                Spacer()
+                                
+                                if position == allPositions.name {
+                                    Image(systemName: "checkmark")
+                                        .resizable()
+                                        .frame(width: 25,
+                                               height: 25
+                                        )
+                                        .foregroundStyle(Color.qikiColor)
+                                        .padding(.trailing,
+                                                 20
+                                        )
+                                }
+                            }
+                        }
+                        .listRowSeparatorTint(Color.gray)
+                    }
+                }
+                .listStyle(.insetGrouped)
+            }
+            .frame(width: geometryReader.size.width / 2
+            )
+            .background(Color.white)
+            .padding([.leading, .trailing],
+                     geometryReader.size.width / 4
+            )
+            .padding([.top, .bottom],
+                     100
+            )
+            .cornerRadius(10,
+                          corners: .allCorners
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 7)
+                    .stroke(Color.init(uiColor: .clear),
+                            lineWidth: 1
+                           )
+            )
+        }
+    }
+}
+
 #Preview {
-    DrawView(repository: CheckoutRepository.init(apiClientService: APIClientService(logger: Logger.init(label: ""))))
+    DrawView(repository: DrawRepository.init(apiClientService: APIClientService(logger: Logger.init(label: ""))))
 }

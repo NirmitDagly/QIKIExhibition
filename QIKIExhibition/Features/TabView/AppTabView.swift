@@ -35,7 +35,7 @@ struct AppTabView: View {
                 DrawCoordinator()
                     .tabItem {
                         Label("Draw Entry",
-                              systemImage: "list.clipboard"
+                              systemImage: "plus.circle"
                         )
                     }
                     .tag(1)
