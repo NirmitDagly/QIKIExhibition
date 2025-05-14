@@ -112,4 +112,12 @@ extension CheckoutRepository {
             mapper: InquiryDetailsResponseMapper()
         )
     }
+    
+    public func saveInquiryDetailsOnServerWithOneEntry(withEntryDetails entryDetails: [String: Any]) async throws -> InquiryDetails {
+        try await apiClientService.request(
+            APIEndpoints.saveCompetitionEntryWithOneEntry(for: entryDetails),
+            mapper: InquiryDetailsResponseMapper()
+        )
+    }
+
 }

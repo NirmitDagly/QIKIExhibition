@@ -11,7 +11,7 @@ import Network
 extension APIEndpoints {
     static func saveCompetitionEntry(for entryDetails: [[String: Any]]) -> APIEndpoint {
         return .init(
-            path: "/Services/DrawEntry/",
+            path: "/Services/DrawEntry",
             httpMethod: .post,
             //headers: ["apiKey": UserDefaults.accessToken],
             bodyParameter: .dictionary(["entryDetails": entryDetails],
@@ -19,24 +19,35 @@ extension APIEndpoints {
                                       )
             )
     }
+    
+    static func saveCompetitionEntryWithOneEntry(for entryDetails: [String: Any]) -> APIEndpoint {
+        return .init(
+            path: "/Services/DrawEntry",
+            httpMethod: .post,
+            //headers: ["apiKey": UserDefaults.accessToken],
+            bodyParameter: .dictionary(entryDetails,
+                                       options: .prettyPrinted
+                                      )
+            )
+    }
 }
 
 public struct InquiryDetails: Codable {
-    public var success: Int
-    public var message: String
+    public var success: Bool
+    public var message: String?
     public var syncIds: [Int]?
 }
 
 public struct InquiryDetailsResponse: Codable {
-    public var success: Int
-    public var message: String
+    public var success: Bool
+    public var message: String?
     public var syncIds: [Int]?
 }
 
 public struct InquiryDetailsResponseMapper: Mappable {
     public func map(_ input: InquiryDetailsResponse) throws -> InquiryDetails {
         return .init(success: input.success,
-                     message: input.message,
+                     message: input.message ?? "",
                      syncIds: input.syncIds ?? [0]
         )
     }

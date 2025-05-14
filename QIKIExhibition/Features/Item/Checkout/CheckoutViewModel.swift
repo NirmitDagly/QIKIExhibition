@@ -129,8 +129,9 @@ extension CheckoutViewModel {
     public func saveEnquiryDetailsOnServer() async {
         if isNetworkReachable() {
             do {
-                let allEnquiries = try repository.getEnquieriesFromDatabase()
-                async let serverResponse = repository.saveInquiryDetailsOnServer(withEntryDetails: allEnquiries)
+                let allEnquiries = try repository.getEnquieriesFromDatabase().last!
+                //async let serverResponse = repository.saveInquiryDetailsOnServer(withEntryDetails: allEnquiries)
+                async let serverResponse = repository.saveInquiryDetailsOnServerWithOneEntry(withEntryDetails: allEnquiries)
                 
                 guard let serverResponseDetails = try? await serverResponse else {
                     Log.shared.writeToLogFile(atLevel: .error,

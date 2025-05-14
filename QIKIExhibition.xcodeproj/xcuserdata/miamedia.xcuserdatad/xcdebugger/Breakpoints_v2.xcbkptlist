@@ -3,4 +3,140 @@
    uuid = "29655FE1-4DA7-4832-A179-A2C3ADB7CA32"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "BE60FCF8-1FE7-48A5-8320-28F13D493A63"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "QIKIExhibition/Features/Item/Checkout/CheckoutViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "133"
+            endingLineNumber = "133"
+            landmarkName = "saveEnquiryDetailsOnServer()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "BE60FCF8-1FE7-48A5-8320-28F13D493A63 - 3031960b0535ecd0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for QIKI_Exhibition.CheckoutViewModel.saveEnquiryDetailsOnServer() async -&gt; ()"
+                  moduleName = "QIKI Exhibition.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/miamedia/Desktop/QIKIExhibition/QIKIExhibition/Features/Item/Checkout/CheckoutViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "134"
+                  endingLineNumber = "134">
+               </Location>
+               <Location
+                  uuid = "BE60FCF8-1FE7-48A5-8320-28F13D493A63 - b6922b51733ae6ec"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "implicit closure #1 @Sendable () async throws -&gt; QIKI_Exhibition.InquiryDetails in QIKI_Exhibition.CheckoutViewModel.saveEnquiryDetailsOnServer() async -&gt; ()"
+                  moduleName = "QIKI Exhibition.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/miamedia/Desktop/QIKIExhibition/QIKIExhibition/Features/Item/Checkout/CheckoutViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "134"
+                  endingLineNumber = "134">
+               </Location>
+               <Location
+                  uuid = "BE60FCF8-1FE7-48A5-8320-28F13D493A63 - 39e62a61d331bfd0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for implicit closure #1 @Sendable () async throws -&gt; QIKI_Exhibition.InquiryDetails in QIKI_Exhibition.CheckoutViewModel.saveEnquiryDetailsOnServer() async -&gt; ()"
+                  moduleName = "QIKI Exhibition.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/miamedia/Desktop/QIKIExhibition/QIKIExhibition/Features/Item/Checkout/CheckoutViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "134"
+                  endingLineNumber = "134">
+               </Location>
+               <Location
+                  uuid = "BE60FCF8-1FE7-48A5-8320-28F13D493A63 - 6b7eaaf0b2306392"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for implicit closure #1 @Sendable () async throws -&gt; QIKI_Exhibition.InquiryDetails in QIKI_Exhibition.CheckoutViewModel.saveEnquiryDetailsOnServer() async -&gt; ()"
+                  moduleName = "QIKI Exhibition.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/miamedia/Desktop/QIKIExhibition/QIKIExhibition/Features/Item/Checkout/CheckoutViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "134"
+                  endingLineNumber = "134">
+               </Location>
+               <Location
+                  uuid = "BE60FCF8-1FE7-48A5-8320-28F13D493A63 - f3c56b37c1b34173"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(4) suspend resume partial function for implicit closure #1 @Sendable () async throws -&gt; QIKI_Exhibition.InquiryDetails in QIKI_Exhibition.CheckoutViewModel.saveEnquiryDetailsOnServer() async -&gt; ()"
+                  moduleName = "QIKI Exhibition.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/miamedia/Desktop/QIKIExhibition/QIKIExhibition/Features/Item/Checkout/CheckoutViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "134"
+                  endingLineNumber = "134">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "CCE2D93E-E74B-4B45-B21F-5E751F21C6FF"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "QIKIExhibition/Features/Item/Checkout/CheckoutViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "148"
+            endingLineNumber = "148"
+            landmarkName = "saveEnquiryDetailsOnServer()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "CCE2D93E-E74B-4B45-B21F-5E751F21C6FF - 196632c95f645300"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for QIKI_Exhibition.CheckoutViewModel.saveEnquiryDetailsOnServer() async -&gt; ()"
+                  moduleName = "QIKI Exhibition.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/miamedia/Desktop/QIKIExhibition/QIKIExhibition/Features/Item/Checkout/CheckoutViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "148"
+                  endingLineNumber = "148">
+               </Location>
+               <Location
+                  uuid = "CCE2D93E-E74B-4B45-B21F-5E751F21C6FF - 474e36e500917d1d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(8) suspend resume partial function for QIKI_Exhibition.CheckoutViewModel.saveEnquiryDetailsOnServer() async -&gt; ()"
+                  moduleName = "QIKI Exhibition.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/miamedia/Desktop/QIKIExhibition/QIKIExhibition/Features/Item/Checkout/CheckoutViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "148"
+                  endingLineNumber = "148">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

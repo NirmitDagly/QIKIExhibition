@@ -38,7 +38,7 @@ struct QIKIExhibition: App {
         }
         
         let apiClientService = APIClientService(logger: logger,
-                                                configuration: .init(baseURL: URL(string: "https://api-dev.qiki.com.au"),
+                                                configuration: .init(baseURL: URL(string: "https://crm.qiki.com.au"),
                                                                      baseHeaders: ["Accept": "application/json",
                                                                                    "content-type": "application/json"
                                                                                   ]
