@@ -14,7 +14,7 @@ extension APIEndpoints {
             path: "/Services/DrawEntry",
             httpMethod: .post,
             //headers: ["apiKey": UserDefaults.accessToken],
-            bodyParameter: .dictionary(["entryDetails": entryDetails],
+            bodyParameter: .dictionary(["entries": entryDetails],
                                        options: .prettyPrinted
                                       )
             )
@@ -42,6 +42,12 @@ public struct InquiryDetailsResponse: Codable {
     public var success: Bool
     public var message: String?
     public var syncIds: [Int]?
+    
+    enum CodingKeys: String, CodingKey {
+        case success
+        case message
+        case syncIds = "entries"
+    }
 }
 
 public struct InquiryDetailsResponseMapper: Mappable {

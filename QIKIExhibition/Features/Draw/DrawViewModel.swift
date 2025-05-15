@@ -58,6 +58,24 @@ final class DrawViewModel: ObservableObject {
         shouldShowCancelButton = false
         displayNetworkAlert = true
     }
+    
+    //MARK: Allocate grid items for Attribute displays
+    func allocateGridItems() -> [GridItem] {
+        var allocatedGridItems = [GridItem]()
+        allocatedGridItems = Array(repeating: .init(.adaptive(minimum: 150,
+                                                              maximum: 150
+                                                             ),
+                                                    spacing: 20,
+                                                    alignment: .leading
+        ),
+                                   count: 1
+        )
+        return allocatedGridItems
+    }
+    
+    func editingChanged(enteredPhone: String) -> String {
+        return enteredPhone.filter(\.isWhitespace.negated)
+    }
 }
 
 
@@ -96,7 +114,7 @@ extension DrawViewModel {
                                           withMessage: "Inquiry record details has been stored on the server with \(serverResponseDetails)."
                 )
                 
-                if serverResponseDetails.success == 1 && serverResponseDetails.syncIds != nil && serverResponseDetails.syncIds!.count > 0 {
+                if serverResponseDetails.success == true && serverResponseDetails.syncIds != nil && serverResponseDetails.syncIds!.count > 0 {
                     for i in 0 ..< serverResponseDetails.syncIds!.count {
                         try repository.updateSyncStatusToDatabase(for: serverResponseDetails.syncIds![i])
                     }
@@ -131,4 +149,8 @@ extension DrawViewModel {
             networkAlertMessage()
         }
     }
+}
+
+extension Bool {
+    var negated: Bool { !self }
 }

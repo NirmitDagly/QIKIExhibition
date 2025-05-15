@@ -34,7 +34,7 @@ struct AppTabView: View {
                 
                 DrawCoordinator()
                     .tabItem {
-                        Label("Draw Entry",
+                        Label("Submit Giveaway Entry",
                               systemImage: "plus.circle"
                         )
                     }
@@ -43,7 +43,7 @@ struct AppTabView: View {
                 
                 EnquiriesCoordinator()
                     .tabItem {
-                        Label("Entries",
+                        Label("Giveaway Entries",
                               systemImage: "list.clipboard"
                         )
                     }

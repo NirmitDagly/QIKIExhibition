@@ -77,6 +77,24 @@ final class CheckoutViewModel: ObservableObject {
         shouldShowCancelButton = false
         displayNetworkAlert = true
     }
+    
+    //MARK: Allocate grid items for Attribute displays
+    func allocateGridItemsForPosition() -> [GridItem] {
+        var allocatedGridItems = [GridItem]()
+        allocatedGridItems = Array(repeating: .init(.adaptive(minimum: 150,
+                                                              maximum: 150
+                                                             ),
+                                                    spacing: 20,
+                                                    alignment: .leading
+        ),
+                                   count: 1
+        )
+        return allocatedGridItems
+    }
+    
+    func editingChanged(enteredPhone: String) -> String {
+        return enteredPhone.filter(\.isWhitespace.negated)
+    }
 }
 
 extension CheckoutViewModel {
@@ -129,9 +147,9 @@ extension CheckoutViewModel {
     public func saveEnquiryDetailsOnServer() async {
         if isNetworkReachable() {
             do {
-                let allEnquiries = try repository.getEnquieriesFromDatabase().last!
-                //async let serverResponse = repository.saveInquiryDetailsOnServer(withEntryDetails: allEnquiries)
-                async let serverResponse = repository.saveInquiryDetailsOnServerWithOneEntry(withEntryDetails: allEnquiries)
+                let allEnquiries = try repository.getEnquieriesFromDatabase()
+                async let serverResponse = repository.saveInquiryDetailsOnServer(withEntryDetails: allEnquiries)
+                //async let serverResponse = repository.saveInquiryDetailsOnServerWithOneEntry(withEntryDetails: allEnquiries)
                 
                 guard let serverResponseDetails = try? await serverResponse else {
                     Log.shared.writeToLogFile(atLevel: .error,
@@ -145,7 +163,7 @@ extension CheckoutViewModel {
                                           withMessage: "Inquiry record details has been stored on the server with \(serverResponseDetails)."
                 )
                 
-                if serverResponseDetails.success == 1 && serverResponseDetails.syncIds != nil && serverResponseDetails.syncIds!.count > 0 {
+                if serverResponseDetails.success == true && serverResponseDetails.syncIds != nil && serverResponseDetails.syncIds!.count > 0 {
                     for i in 0 ..< serverResponseDetails.syncIds!.count {
                         try repository.updateSyncStats(for: serverResponseDetails.syncIds![i])
                     }

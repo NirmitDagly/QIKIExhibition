@@ -16,13 +16,13 @@ struct CheckoutView: View {
     
     @State var titleText = "Checkout"
     
-    @State var name = "Nirmit"
+    @State var name = ""
     
-    @State var businessName = "QIKI"
+    @State var businessName = ""
     
-    @State var email = "nirmit@qiki.com.au"
+    @State var email = ""
     
-    @State var phone = "0414190553"
+    @State var phone = ""
     
     @State var position = ""
     
@@ -154,13 +154,17 @@ struct CheckoutView: View {
                 if checkoutViewModel.shouldShowPositionList {
                     BackgroundView()
                     
-                    PositionListView(checkoutViewModel: checkoutViewModel)
+                    PositionListView(position: $position,
+                                     checkoutViewModel: checkoutViewModel
+                    )
                 } else {
                     BackgroundView()
                         .hidden()
                     
-                    PositionListView(checkoutViewModel: checkoutViewModel)
-                        .hidden()
+                    PositionListView(position: $position,
+                                     checkoutViewModel: checkoutViewModel
+                    )
+                    .hidden()
                 }
                 
                 if shouldShowConfirmation == true {
@@ -592,12 +596,10 @@ fileprivate struct BusinessPhoneView: View {
             )
             .border(Color.gray)
             .submitLabel(.done)
+            .onChange(of: phone) {
+                phone = checkoutViewModel.editingChanged(enteredPhone: phone)
+            }
             .onSubmit {
-                guard phone != "" else {
-                    //Display alert here
-                    return
-                }
-                
                 checkoutViewModel.businessPhone = phone
             }
             .padding([.leading, .trailing],
@@ -630,7 +632,7 @@ fileprivate struct BusinessPositionView: View {
                              20
                     )
                 
-                Text(checkoutViewModel.position)
+                Text(position)
                     .frame(width: abs(geometryReader.size.width - 315),
                            height: 50,
                            alignment: .leading
@@ -645,25 +647,7 @@ fileprivate struct BusinessPositionView: View {
                     .border(Color.gray)
                     .onTapGesture {
                         checkoutViewModel.shouldShowPositionList = true
-                        //isShowingPicker = true
                     }
-//                    .popover(isPresented: $isShowingPicker) {
-//                        Picker("",
-//                               selection: $position
-//                        ) {
-//                            ForEach(checkoutViewModel.positionList,
-//                                    id: \.self
-//                            ) {
-//                                Text($0)
-//                            }
-//                        }
-//                        .pickerStyle(.wheel)
-//                        .labelsHidden()
-//                        .onChange(of: position) {
-//                            isShowingPicker = false
-//                            checkoutViewModel.position = position
-//                        }
-//                    }
                     .padding([.leading, .trailing],
                              20
                     )
@@ -747,9 +731,25 @@ fileprivate struct PayNowView: View {
                   businessName != "",
                   email != "",
                   phone != "",
-                  checkoutViewModel.position != ""
+                  position != ""
             else {
-                checkoutViewModel.alertMessage = "One of the following field is empty:\nName\nBusiness Name\nBusiness Email\nBusiness Phone\nPosition at business."
+                checkoutViewModel.alertMessage = "Please make sure you have filled all the following fields:\n\nName\nBusiness Name\nBusiness Email\nBusiness Phone\nPosition at business"
+                checkoutViewModel.shouldShowCancelButton = false
+                checkoutViewModel.displayErrorAlert = true
+                
+                return
+            }
+            
+            guard Helper.shared.validateEmail(enteredEmail: email) else {
+                checkoutViewModel.alertMessage = "Please enter valid email."
+                checkoutViewModel.shouldShowCancelButton = false
+                checkoutViewModel.displayErrorAlert = true
+                
+                return
+            }
+            
+            guard phone.count == 10, Helper.shared.validatePhoneNumber(phoneNumber: phone) else {
+                checkoutViewModel.alertMessage = "Please enter valid 10-digit phone number."
                 checkoutViewModel.shouldShowCancelButton = false
                 checkoutViewModel.displayErrorAlert = true
                 
@@ -760,6 +760,7 @@ fileprivate struct PayNowView: View {
             checkoutViewModel.businessName = businessName
             checkoutViewModel.businessEmail = email
             checkoutViewModel.businessPhone = phone
+            checkoutViewModel.position = position
             
             Log.shared.writeToLogFile(atLevel: .info,
                                       withMessage: "User is entering the following lead details: \nName: \(name), \nBusiness Name: \(businessName), \nBusiness Email: \(email), \nBusiness Phone: \(phone), \nPosition: \(position)."
@@ -874,6 +875,10 @@ fileprivate struct EntryConfirmationView: View {
 
 fileprivate struct PositionListView: View {
     
+    @State var gridItems = [GridItem]()
+    
+    @Binding var position: String
+    
     @ObservedObject var checkoutViewModel: CheckoutViewModel
     
     var body: some View {
@@ -881,13 +886,13 @@ fileprivate struct PositionListView: View {
             VStack {
                 HStack {
                     Button {
-                        checkoutViewModel.position = ""
+                        position = ""
                         checkoutViewModel.shouldShowPositionList = false
                     } label: {
                         Image(systemName: "xmark")
                             .resizable()
-                            .frame(width: 30,
-                                   height: 30
+                            .frame(width: 20,
+                                   height: 20
                             )
                             .padding(.leading,
                                      20
@@ -908,46 +913,47 @@ fileprivate struct PositionListView: View {
                     Spacer()
                 }
                 
-                List {
-                    Section {
-                        ForEach(positionList,
-                                id: \.id
-                        ) { position in
-                            HStack {
-                                Button {
-                                    //Select position
-                                    checkoutViewModel.position = position.name
-                                    checkoutViewModel.shouldShowPositionList = false
-                                } label: {
-                                    Text(position.name)
-                                        .frame(height: 50)
-                                        .font(.mediumFontWithSize(withSize: 18))
-                                        .foregroundStyle(Color.qikiColor)
-                                }
-                                .frame(height: 50)
-                                
-                                Spacer()
-                                
-                                if checkoutViewModel.position == position.name {
-                                    Image(systemName: "checkmark")
-                                        .resizable()
-                                        .frame(width: 25,
-                                               height: 25
-                                        )
-                                        .foregroundStyle(Color.qikiColor)
-                                        .padding(.trailing,
-                                                 20
-                                        )
-                                }
-                            }
+                LazyVGrid(columns: gridItems,
+                          spacing: 20
+                ) {
+                    ForEach(positionList,
+                            id: \.id
+                    ) { positionDetail in
+                        Button {
+                            //Select categories for product
+                            position = positionDetail.name
+                            checkoutViewModel.shouldShowPositionList = false
+                        } label: {
+                            Text(positionDetail.name)
+                                .frame(width: 150,
+                                       height: 50
+                                )
+                                .font(.mediumFontWithSize(withSize: 18))
+                                .foregroundStyle(Color.white)
+                                .background(position == positionDetail.name ?
+                                            Color.qikiGreen :
+                                                Color.qikiColorSelected
+                                )
+                                .cornerRadius(10,
+                                              corners: .allCorners
+                                )
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(Color.clear,
+                                                lineWidth: 1
+                                               )
+                                )
+                                .padding([.leading, .trailing],
+                                         10
+                                )
                         }
-                        .listRowSeparatorTint(Color.gray)
                     }
                 }
-                .listStyle(.insetGrouped)
+                .padding(.bottom,
+                         20
+                )
             }
-            .frame(width: geometryReader.size.width / 2
-            )
+            .frame(width: geometryReader.size.width / 2)
             .background(Color.white)
             .padding([.leading, .trailing],
                      geometryReader.size.width / 4
@@ -964,6 +970,9 @@ fileprivate struct PositionListView: View {
                             lineWidth: 1
                            )
             )
+            .onAppear() {
+                gridItems = checkoutViewModel.allocateGridItemsForPosition()
+            }
         }
     }
 }

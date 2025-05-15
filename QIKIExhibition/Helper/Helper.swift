@@ -211,6 +211,18 @@ public class Helper {
             }
         }
     }
+    
+    func validateEmail(enteredEmail:String) -> Bool {
+        let emailFormat = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+        let emailPredicate = NSPredicate(format:"SELF MATCHES %@", emailFormat)
+        return emailPredicate.evaluate(with: enteredEmail)
+    }
+
+    func validatePhoneNumber(phoneNumber: String) -> Bool {
+        let phoneNumberRegex = "\\d{10}$"
+        let phoneNumberPredicate = NSPredicate(format: "SELF MATCHES %@", phoneNumberRegex)
+        return phoneNumberPredicate.evaluate(with: phoneNumber)
+    }
 }
 
 actor RefreshLinklyToken {

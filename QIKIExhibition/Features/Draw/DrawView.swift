@@ -16,13 +16,13 @@ struct DrawView: View {
     
     @State var titleText = "Checkout"
     
-    @State var name = "Nirmit"
+    @State var name = ""
     
-    @State var businessName = "QIKI"
+    @State var businessName = ""
     
-    @State var email = "nirmit@qiki.com.au"
+    @State var email = ""
     
-    @State var phone = "0414190553"
+    @State var phone = ""
     
     @State var position = ""
     
@@ -457,6 +457,9 @@ fileprivate struct BusinessPhoneView: View {
             )
             .border(Color.gray)
             .submitLabel(.done)
+            .onChange(of: phone) {
+                phone = drawViewModel.editingChanged(enteredPhone: phone)
+            }
             .onSubmit {
                 guard phone != "" else {
                     //Display alert here
@@ -543,7 +546,23 @@ fileprivate struct SaveEntryView: View {
                   phone != "",
                   position != ""
             else {
-                drawViewModel.alertMessage = "One of the following field is empty:\nName\nBusiness Name\nBusiness Email\nBusiness Phone\nPosition at business."
+                drawViewModel.alertMessage = "Please make sure you have filled all the following fields:\n\nName\nBusiness Name\nBusiness Email\nBusiness Phone\nPosition at business"
+                drawViewModel.shouldShowCancelButton = false
+                drawViewModel.displayErrorAlert = true
+                
+                return
+            }
+            
+            guard Helper.shared.validateEmail(enteredEmail: email) else {
+                drawViewModel.alertMessage = "Please enter valid email."
+                drawViewModel.shouldShowCancelButton = false
+                drawViewModel.displayErrorAlert = true
+                
+                return
+            }
+            
+            guard phone.count == 10, Helper.shared.validatePhoneNumber(phoneNumber: phone) else {
+                drawViewModel.alertMessage = "Please enter valid 10-digit phone number."
                 drawViewModel.shouldShowCancelButton = false
                 drawViewModel.displayErrorAlert = true
                 
@@ -562,7 +581,7 @@ fileprivate struct SaveEntryView: View {
             
             shouldShowConfirmation = true
         } label: {
-            Text("Enter to draw")
+            Text("Submit Entry")
                 .frame(width: 300,
                        height: 50
                 )
@@ -651,6 +670,8 @@ fileprivate struct EntryConfirmationView: View {
 
 fileprivate struct PositionListView: View {
     
+    @State var gridItems = [GridItem]()
+    
     @Binding var position: String
     
     @ObservedObject var drawViewModel: DrawViewModel
@@ -665,8 +686,8 @@ fileprivate struct PositionListView: View {
                     } label: {
                         Image(systemName: "xmark")
                             .resizable()
-                            .frame(width: 30,
-                                   height: 30
+                            .frame(width: 20,
+                                   height: 20
                             )
                             .padding(.leading,
                                      20
@@ -687,46 +708,47 @@ fileprivate struct PositionListView: View {
                     Spacer()
                 }
                 
-                List {
-                    Section {
-                        ForEach(positionList,
-                                id: \.id
-                        ) { allPositions in
-                            HStack {
-                                Button {
-                                    //Select position
-                                    position = allPositions.name
-                                    drawViewModel.shouldShowPositionList = false
-                                } label: {
-                                    Text(allPositions.name)
-                                        .frame(height: 50)
-                                        .font(.mediumFontWithSize(withSize: 18))
-                                        .foregroundStyle(Color.qikiColor)
-                                }
-                                .frame(height: 50)
-                                
-                                Spacer()
-                                
-                                if position == allPositions.name {
-                                    Image(systemName: "checkmark")
-                                        .resizable()
-                                        .frame(width: 25,
-                                               height: 25
-                                        )
-                                        .foregroundStyle(Color.qikiColor)
-                                        .padding(.trailing,
-                                                 20
-                                        )
-                                }
-                            }
+                LazyVGrid(columns: gridItems,
+                          spacing: 20
+                ) {
+                    ForEach(positionList,
+                            id: \.id
+                    ) { positionDetail in
+                        Button {
+                            //Select categories for product
+                            position = positionDetail.name
+                            drawViewModel.shouldShowPositionList = false
+                        } label: {
+                            Text(positionDetail.name)
+                                .frame(width: 150,
+                                       height: 50
+                                )
+                                .font(.mediumFontWithSize(withSize: 18))
+                                .foregroundStyle(Color.white)
+                                .background(drawViewModel.position == positionDetail.name ?
+                                            Color.qikiGreen :
+                                                Color.qikiColorSelected
+                                )
+                                .cornerRadius(10,
+                                              corners: .allCorners
+                                )
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(Color.clear,
+                                                lineWidth: 1
+                                               )
+                                )
+                                .padding([.leading, .trailing],
+                                         10
+                                )
                         }
-                        .listRowSeparatorTint(Color.gray)
                     }
                 }
-                .listStyle(.insetGrouped)
+                .padding(.bottom,
+                         20
+                )
             }
-            .frame(width: geometryReader.size.width / 2
-            )
+            .frame(width: geometryReader.size.width / 2)
             .background(Color.white)
             .padding([.leading, .trailing],
                      geometryReader.size.width / 4
@@ -743,6 +765,9 @@ fileprivate struct PositionListView: View {
                             lineWidth: 1
                            )
             )
+            .onAppear() {
+                gridItems = drawViewModel.allocateGridItems()
+            }
         }
     }
 }
