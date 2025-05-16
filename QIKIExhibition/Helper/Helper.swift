@@ -212,10 +212,15 @@ public class Helper {
         }
     }
     
-    func validateEmail(enteredEmail:String) -> Bool {
-        let emailFormat = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-        let emailPredicate = NSPredicate(format:"SELF MATCHES %@", emailFormat)
-        return emailPredicate.evaluate(with: enteredEmail)
+    func validateEmail(enteredEmail: String) -> Bool {
+//        let emailFormat = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+//        let emailPredicate = NSPredicate(format:"SELF MATCHES %@", emailFormat)
+//        return emailPredicate.evaluate(with: enteredEmail)
+        
+        let regex = try! NSRegularExpression(pattern: "[A-Za-z0-9_+%$-]@", options: [.caseInsensitive])
+        let range = NSRange(location: 0, length: enteredEmail.count)
+        let matches = regex.matches(in: enteredEmail, options: [], range: range)
+        return matches.first != nil
     }
 
     func validatePhoneNumber(phoneNumber: String) -> Bool {
