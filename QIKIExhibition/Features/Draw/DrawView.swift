@@ -14,10 +14,10 @@ import QAlert
 
 struct DrawView: View {
     
-    @State var titleText = "Checkout"
+    @State var titleText = "Draw Entry Form"
     
     @State var name = ""
-    
+        
     @State var businessName = ""
     
     @State var email = ""
@@ -644,7 +644,9 @@ fileprivate struct EntryConfirmationView: View {
                     .frame(alignment: .center)
                     .font(.demiBoldFontWithSize(withSize: 18))
             }
-            .frame(height: 350)
+            .frame(width: geometryReader.size.width / 2,
+                   height: 350
+            )
             .background(Color.white)
             .cornerRadius(7,
                           corners: .allCorners
