@@ -81,3 +81,5 @@ var positionList = [Position(id: 1,
                     Position(id: 11,
                              name: "Staff")
 ]
+
+var syncTimer: Timer?

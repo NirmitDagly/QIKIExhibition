@@ -76,6 +76,18 @@ final class DrawViewModel: ObservableObject {
     func editingChanged(enteredPhone: String) -> String {
         return enteredPhone.filter(\.isWhitespace.negated)
     }
+    
+    func startSyncTimer() {
+        if syncTimer == nil {
+            syncTimer = Timer.scheduledTimer(withTimeInterval: 10,
+                                                   repeats: true
+            ) { _ in
+                Task {
+                    await self.saveEnquiryDetailsOnServer()
+                }
+            }
+        }
+    }
 }
 
 
@@ -145,8 +157,6 @@ extension DrawViewModel {
                                           withMessage: "Last inquiry record has been stored on the server because of unknonwn error."
                 )
             }
-        } else {
-            networkAlertMessage()
         }
     }
 }

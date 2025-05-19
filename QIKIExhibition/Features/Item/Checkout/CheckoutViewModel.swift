@@ -140,6 +140,19 @@ extension CheckoutViewModel {
             //Error logged at repository level...
         }
     }
+    
+    func startSyncTimer() {
+        if syncTimer == nil {
+            syncTimer = Timer.scheduledTimer(withTimeInterval: 10,
+                                                   repeats: true
+            ) { _ in
+                Task {
+                    await self.saveEnquiryDetailsOnServer()
+                }
+            }
+            
+        }
+    }
 }
 
 extension CheckoutViewModel {
@@ -194,8 +207,6 @@ extension CheckoutViewModel {
                                           withMessage: "Last inquiry record has been stored on the server because of unknonwn error."
                 )
             }
-        } else {
-            networkAlertMessage()
         }
     }
 }

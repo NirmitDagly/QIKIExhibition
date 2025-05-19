@@ -136,6 +136,9 @@ struct DrawView: View {
                     .hidden()
             }
         }
+        .onAppear {
+            drawViewModel.startSyncTimer()
+        }
         .onChange(of: shouldShowConfirmation) {
             if shouldShowConfirmation == true {
                 print(position)

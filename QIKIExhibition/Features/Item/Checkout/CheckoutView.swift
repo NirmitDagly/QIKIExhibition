@@ -143,6 +143,7 @@ struct CheckoutView: View {
                 .onAppear() {
                     checkoutViewModel.itemsInDocket = itemsInDocket
                     checkoutViewModel.finalPayableAmount()
+                    checkoutViewModel.startSyncTimer()
                 }
                 
                 if checkoutViewModel.shouldShowTransactionView == true {
