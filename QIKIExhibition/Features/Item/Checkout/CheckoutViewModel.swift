@@ -143,7 +143,7 @@ extension CheckoutViewModel {
     
     func startSyncTimer() {
         if syncTimer == nil {
-            syncTimer = Timer.scheduledTimer(withTimeInterval: 10,
+            syncTimer = Timer.scheduledTimer(withTimeInterval: 120,
                                                    repeats: true
             ) { _ in
                 Task {

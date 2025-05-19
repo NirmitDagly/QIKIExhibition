@@ -18,7 +18,7 @@ struct EnquiriesCoordinator: View {
     @EnvironmentObject var router: Router
 
     var body: some View {
-        EnquiriesView(repository: EnquiriesRepository())
+        EnquiriesView(repository: EnquiriesRepository(apiClientService: configuration.apiClientService))
     }
 }
 

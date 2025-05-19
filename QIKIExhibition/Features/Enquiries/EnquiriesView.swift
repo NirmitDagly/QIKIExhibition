@@ -32,7 +32,10 @@ struct EnquiriesView: View {
     var body: some View {
         ZStack {
             VStack(spacing: 0) {
-                EnquiriesTitleView(title: titleText)
+                EnquiriesTitleView(title: titleText,
+                                   shouldDisplayLeads: $shouldDisplayLeads,
+                                   enquiriesViewModel: enquiriesViewModel
+                )
                 
                 if shouldShowPasswordAlert {
                     Spacer()
@@ -77,12 +80,52 @@ struct EnquiriesView: View {
             shouldShowPasswordAlert = true
             shouldDisplayLeads = false
         }
+        .customAlert("ALERT",
+                        isPresented: $enquiriesViewModel.displaySuccessAlert,
+                        showingCancelButton: $enquiriesViewModel.shouldShowCancelButton,
+                        actionText: "Ok",
+                        actionOnDismiss: {
+            Log.shared.writeToLogFile(atLevel: .info,
+                                        withMessage: "User tapped on cancel button in alert message. Message: \(enquiriesViewModel.alertMessage)"
+            )
+        },
+                        action: {
+            Log.shared.writeToLogFile(atLevel: .info,
+                                        withMessage: "\(enquiriesViewModel.alertMessage)"
+            )
+        },
+                        message: {
+            Text("\(enquiriesViewModel.alertMessage)")
+        }
+        )
+        .customAlert("ALERT",
+                        isPresented: $enquiriesViewModel.displayNetworkAlert,
+                        showingCancelButton: $enquiriesViewModel.shouldShowCancelButton,
+                        actionText: "Ok",
+                        actionOnDismiss: {
+            Log.shared.writeToLogFile(atLevel: .info,
+                                        withMessage: "User tapped on cancel button in alert message. Message: \(enquiriesViewModel.alertMessage)"
+            )
+        },
+                        action: {
+            Log.shared.writeToLogFile(atLevel: .info,
+                                        withMessage: "\(enquiriesViewModel.alertMessage)"
+            )
+        },
+                        message: {
+            Text("\(enquiriesViewModel.alertMessage)")
+        }
+        )
     }
 }
 
 struct EnquiriesTitleView: View {
     
     var title: String
+    
+    @Binding var shouldDisplayLeads: Bool
+    
+    @ObservedObject var enquiriesViewModel: EnquiriesViewModel
     
     var body: some View {
         HStack() {
@@ -93,6 +136,27 @@ struct EnquiriesTitleView: View {
                 .font(.demiBoldFontWithSize(withSize: 24))
             
             Spacer()
+            
+            if shouldDisplayLeads == true {
+                Button {
+                    if isNetworkReachable() {
+                        Task {
+                            await enquiriesViewModel.saveEnquiryDetailsOnServer()
+                        }
+                    } else {
+                        enquiriesViewModel.networkAlertMessage()
+                    }
+                } label: {
+                    Text("Sync")
+                        .frame(height: 30)
+                        .foregroundStyle(Color.white)
+                        .font(.demiBoldFontWithSize(withSize: 18))
+                }
+                .frame(height: 30)
+                .padding(.trailing,
+                         30
+                )
+            }
         }
         .frame(height: 64,
                alignment: .center
@@ -343,7 +407,7 @@ struct PasswordView: View {
 }
 
 #Preview {
-    EnquiriesView(repository: EnquiriesRepository())
+    EnquiriesView(repository: EnquiriesRepository.init(apiClientService: APIClientService(logger: Logger.init(label: ""))))
 }
 
 extension EnquiriesView {
